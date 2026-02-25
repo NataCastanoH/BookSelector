@@ -40,7 +40,7 @@ header p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--tex
 .session-picker{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
 @media(max-width:500px){.session-picker{grid-template-columns:1fr;}}
 .spb{padding:1.7rem 1.2rem;border-radius:20px;border:2px solid var(--cream-dark);background:white;cursor:pointer;text-align:center;transition:all .25s;box-shadow:var(--shadow);}
-.spb:hover{border-color:var(--teal-light);transform:translateY(-3px);box-shadow:0 12px 36px rgba(42,157,143,.18);}
+.spb:hover{border-color:var(--teal-light);}
 .spb.gold{border-color:rgba(201,168,76,.3);}
 .spb.gold:hover{border-color:var(--gold);box-shadow:0 12px 36px rgba(201,168,76,.2);}
 .spb-emoji{font-size:2.4rem;margin-bottom:.5rem;}
@@ -61,9 +61,9 @@ select{cursor:pointer;}
 /* BUTTONS */
 .btn{padding:.72rem 1.4rem;border:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.03em;white-space:nowrap;}
 .btn-p{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:white;box-shadow:0 4px 15px rgba(42,157,143,.35);}
-.btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(42,157,143,.45);}
+.btn-p:hover{box-shadow:0 6px 20px rgba(42,157,143,.45);}
 .btn-g{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:white;box-shadow:var(--shadow-gold);}
-.btn-g:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.5);}
+.btn-g:hover{box-shadow:0 6px 20px rgba(201,168,76,.5);}
 .btn-o{background:transparent;border:2px solid var(--teal-light);color:var(--teal);}
 .btn-o:hover{background:rgba(42,157,143,.05);}
 .btn-ghost{background:transparent;border:none;color:var(--text-light);font-size:.8rem;cursor:pointer;padding:.25rem .45rem;border-radius:8px;font-family:'Jost',sans-serif;}
@@ -137,7 +137,7 @@ select{cursor:pointer;}
 .mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.5rem;}
 @media(max-width:500px){.mode-grid{grid-template-columns:1fr;}}
 .mode-btn{padding:1.5rem 1rem;border-radius:16px;border:2px solid var(--cream-dark);background:white;cursor:pointer;text-align:center;transition:all .25s;box-shadow:var(--shadow);}
-.mode-btn:hover{border-color:var(--teal-light);transform:translateY(-2px);}
+.mode-btn:hover{border-color:var(--teal-light);}
 .mode-btn.gold{border-color:rgba(201,168,76,.3);}
 .mode-btn.gold:hover{border-color:var(--gold);}
 .mode-emoji{font-size:2rem;margin-bottom:.5rem;}
@@ -197,6 +197,32 @@ select{cursor:pointer;}
 .prog-dot{width:10px;height:10px;border-radius:50%;background:var(--cream-dark);transition:all .3s;}
 .prog-dot.active{background:var(--teal);transform:scale(1.2);}
 .prog-dot.done{background:var(--gold);}
+
+/* ── RULETA ── */
+.roulette-wrap{display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+.roulette-canvas-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
+.roulette-canvas-wrap canvas{border-radius:50%;box-shadow:0 8px 32px rgba(42,157,143,.25),0 0 0 6px var(--gold-light);}
+.roulette-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid var(--gold);filter:drop-shadow(0 2px 4px rgba(0,0,0,.2));z-index:10;}
+.roulette-spin-btn{padding:1rem 2.5rem;border-radius:50px;border:none;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:white;font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;cursor:pointer;box-shadow:var(--shadow-gold);transition:all .2s;letter-spacing:.04em;}
+.roulette-spin-btn:hover{box-shadow:0 8px 28px rgba(201,168,76,.55);}
+.roulette-spin-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.roulette-turn{text-align:center;padding:.7rem 1.4rem;background:linear-gradient(135deg,rgba(42,157,143,.07),rgba(201,168,76,.04));border:1px solid rgba(42,157,143,.18);border-radius:50px;}
+.roulette-turn .turn-label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);}
+.roulette-turn .turn-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--teal-dark);font-weight:600;}
+.roulette-alive{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.3rem;}
+.roulette-alive-tag{padding:.28rem .8rem;border-radius:50px;font-size:.8rem;border:1px solid rgba(42,157,143,.25);background:rgba(42,157,143,.07);color:var(--teal-dark);}
+.roulette-alive-tag.dead{background:rgba(224,112,112,.07);border-color:rgba(224,112,112,.25);color:#c0736b;text-decoration:line-through;opacity:.6;}
+.roulette-result-pop{text-align:center;padding:1.4rem;background:linear-gradient(135deg,rgba(224,112,112,.08),rgba(201,168,76,.06));border:2px solid rgba(224,112,112,.3);border-radius:16px;animation:fadeUp .35s ease;}
+.roulette-result-pop.joker{background:linear-gradient(135deg,rgba(42,157,143,.1),rgba(201,168,76,.08));border-color:var(--gold-light);}
+.roulette-result-pop .res-emoji{font-size:2rem;margin-bottom:.4rem;}
+.roulette-result-pop .res-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--teal-dark);margin-bottom:.25rem;}
+.roulette-result-pop .res-book{font-family:'Playfair Display',serif;font-size:1rem;color:#c0736b;font-style:italic;}
+.roulette-result-pop.joker .res-book{color:var(--gold-dark);}
+.joker-choices{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem;}
+.joker-btn{padding:.55rem 1.1rem;border-radius:10px;border:2px solid var(--teal-light);background:white;color:var(--teal-dark);font-family:'Jost',sans-serif;font-size:.85rem;cursor:pointer;transition:all .2s;}
+.joker-btn:hover{background:var(--teal);color:white;border-color:var(--teal);}
+.joker-btn.danger{border-color:#e07070;color:#c0736b;}
+.joker-btn.danger:hover{background:#e07070;color:white;}
 </style>
 </head>
 <body>
@@ -236,9 +262,15 @@ const S = {
   memLocked: false,
   memMoves: 0,
   memSurvivors: [],          // book indices still in game
-  // pairs/bracket
-  pairRounds: [],            // [{matchups:[{a,b}], winner:idx}, ...]
-  pairCurrentRound: 0,
+  // roulette game
+  roulAlive: [],        // book indices still in play
+  roulElim: [],         // eliminated book indices
+  roulSpinnerIdx: 0,    // whose turn it is (index into participants)
+  roulSpinning: false,
+  roulResult: null,     // {type:'eliminate'|'joker', bookIdx, jokerType?}
+  roulJokerPending: false,
+  roulJokerType: null,  // 'again' | 'save'
+  roulSavedIdx: null,   // book idx saved by joker this round
 };
 
 // ════════════════════════════════════════════════════
@@ -262,11 +294,13 @@ const views = {
   s2tie:       vS2Tie,
   // memory
   s2memory:    vS2Memory,
+  // roulette
+  s2roulette:  vS2Roulette,
   // final
   s2results:   vS2Results,
 };
 
-function render() {
+function _routeRender() {
   document.getElementById('root').innerHTML = (views[S.step] || vLanding)();
 }
 
@@ -685,7 +719,12 @@ function vS2Mode() {
         <div class="mode-title">Votación secreta</div>
         <div class="mode-desc">Cada participante vota en privado. Si hay empate, se repite entre los empatados.</div>
       </div>
-      <div class="mode-btn gold" onclick="startMemoryGame()">
+      <div class="mode-btn gold" onclick="startRoulette()">
+        <div class="mode-emoji">🎡</div>
+        <div class="mode-title">Ruleta de la suerte</div>
+        <div class="mode-desc">Cada turno gira la ruleta. El libro que caiga se elimina — con comodines sorpresa. ¡El último sobrevive!</div>
+      </div>
+      <div class="mode-btn" onclick="startMemoryGame()" style="grid-column:span 2">
         <div class="mode-emoji">🃏</div>
         <div class="mode-title">Memory literario</div>
         <div class="mode-desc">Los libros se esconden en un tablero. El último que quede sin descubrir… ¡gana!</div>
@@ -820,6 +859,123 @@ function memIsOver() {
 }
 
 // ════════════════════════════════════════════════════
+//  S2 — RULETA
+// ════════════════════════════════════════════════════
+function vS2Roulette() {
+  const alive = S.roulAlive;
+  const spinner = S.participants[S.roulSpinnerIdx % S.participants.length];
+  const result = S.roulResult;
+  const canSpin = !S.roulSpinning && !result;
+
+  // If only 1 book left → winner!
+  if (alive.length === 1) {
+    S.winnerBookIdx = alive[0];
+    S.votingMode = 'roulette';
+    setTimeout(() => go('s2results'), 800);
+  }
+
+  return `<div class="card">
+    <div class="card-title">🎡 Ruleta de la suerte</div>
+    <div class="card-sub">El libro que caiga… ¡se va! El último sobreviviente gana</div>
+
+    <div class="roulette-wrap">
+
+      <!-- Turno -->
+      <div class="roulette-turn">
+        <div class="turn-label">🎲 Le toca girar a</div>
+        <div class="turn-name">${spinner}</div>
+      </div>
+
+      <!-- Canvas ruleta -->
+      <div class="roulette-canvas-wrap">
+        <div class="roulette-pointer"></div>
+        <canvas id="roulCanvas" width="320" height="320"></canvas>
+      </div>
+
+      <!-- Botón girar -->
+      ${!result ? `<button class="roulette-spin-btn" id="spinBtn" onclick="spinRoulette()" ${S.roulSpinning?'disabled':''}>
+        ${S.roulSpinning ? '✦ Girando…' : '¡Girar! 🎡'}
+      </button>` : ''}
+
+      <!-- Resultado -->
+      ${result ? renderRouletteResult(result) : ''}
+
+      <!-- Libros vivos / eliminados -->
+      <div style="width:100%;max-width:380px">
+        <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);margin-bottom:.5rem;text-align:center">
+          ${alive.length} libro${alive.length!==1?'s':''} en juego
+        </div>
+        <div class="roulette-alive">
+          ${S.books.map((b,i) => {
+            const isAlive = alive.includes(i);
+            return `<span class="roulette-alive-tag ${isAlive?'':'dead'}">
+              ${isAlive?'📖':'💀'} ${b.title}
+            </span>`;
+          }).join('')}
+        </div>
+      </div>
+
+    </div>
+  </div>`;
+}
+
+function renderRouletteResult(result) {
+  if (result.type === 'joker') {
+    const joker = result.jokerType;
+    if (joker === 'protected') {
+      const book = S.books[result.bookIdx];
+      return `<div class="roulette-result-pop joker">
+        <div class="res-emoji">🛡️</div>
+        <div class="res-title">¡Libro protegido!</div>
+        <div class="res-book">"${book.title}"</div>
+        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">Estaba salvado — se libra de la eliminación esta ronda</p>
+        <div class="joker-choices" style="margin-top:.8rem">
+          <button class="joker-btn" onclick="applyJokerAgain()">Girar de nuevo ↺</button>
+        </div>
+      </div>`;
+    }
+    if (joker === 'again') {
+      return `<div class="roulette-result-pop joker">
+        <div class="res-emoji">🃏</div>
+        <div class="res-title">¡Comodín! Gira de nuevo</div>
+        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">La suerte te sonríe — vuelves a girar sin eliminar nada</p>
+        <div class="joker-choices" style="margin-top:.8rem">
+          <button class="joker-btn" onclick="applyJokerAgain()">Girar de nuevo ↺</button>
+        </div>
+      </div>`;
+    }
+    if (joker === 'save') {
+      // show list of alive books to save one
+      return `<div class="roulette-result-pop joker">
+        <div class="res-emoji">🛡️</div>
+        <div class="res-title">¡Comodín! Salva un libro</div>
+        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">Elige un libro para protegerlo de la próxima eliminación</p>
+        <div class="joker-choices" style="flex-direction:column;align-items:center;margin-top:.8rem">
+          ${S.roulAlive.map(bi => `
+            <button class="joker-btn ${S.roulSavedIdx===bi?'active-save':''}"
+              style="${S.roulSavedIdx===bi?'background:var(--teal);color:white;border-color:var(--teal);':''}"
+              onclick="saveBook(${bi})">
+              📖 ${S.books[bi].title}
+            </button>`).join('')}
+          ${S.roulSavedIdx!==null?`<button class="joker-btn" style="margin-top:.4rem;background:var(--gold);color:white;border-color:var(--gold)" onclick="confirmSave()">Confirmar protección ✓</button>`:''}
+        </div>
+      </div>`;
+    }
+  }
+  // Normal elimination
+  const book = S.books[result.bookIdx];
+  return `<div class="roulette-result-pop">
+    <div class="res-emoji">💀</div>
+    <div class="res-title">Libro eliminado</div>
+    <div class="res-book">"${book.title}"</div>
+    <p style="font-size:.8rem;color:var(--text-light);margin-top:.3rem">de ${book.author} · propuesto por ${book.participant}</p>
+    <div class="joker-choices" style="margin-top:.9rem">
+      <button class="joker-btn" onclick="confirmElimination()">Continuar →</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
 //  S2 — FINAL RESULTS
 // ════════════════════════════════════════════════════
 function vS2Results() {
@@ -837,6 +993,8 @@ function vS2Results() {
       <div class="rbar-hd"><span class="rbar-name">${rank===0?'🥇 ':rank===1?'🥈 ':rank===2?'🥉 ':''}<em>${b.title}</em> — ${b.author}${rank===0?'<span class="badge">✦ Elegido</span>':''}</span><span class="rbar-pts">${pts} voto${pts!==1?'s':''}</span></div>
       <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
     </div>`}).join('')}`;
+  } else if (S.votingMode === 'roulette') {
+    scoreRows = `<div class="info-box">🎡 La ruleta del destino eligió a <strong>"${winner.title}"</strong> como el único libro que sobrevivió todas las rondas. ¡El azar ha hablado!</div>`;
   } else if (S.votingMode === 'memory') {
     scoreRows = `<div class="info-box">¡${winner.title} fue el libro que ningún participante descubrió en el Memory! El azar y la suerte lo eligieron. 🎲</div>`;
   }
@@ -1085,13 +1243,228 @@ function resolveFlip(){
 function finishMemory(){go('s2results');}
 
 // ════════════════════════════════════════════════════
+//  ROULETTE HANDLERS
+// ════════════════════════════════════════════════════
+function startRoulette() {
+  S.votingMode = 'roulette';
+  S.roulAlive = S.books.map((_,i) => i);
+  S.roulElim = [];
+  S.roulSpinnerIdx = 0;
+  S.roulSpinning = false;
+  S.roulResult = null;
+  S.roulSavedIdx = null;
+  go('s2roulette');
+  setTimeout(drawRoulette, 50);
+}
+
+// Palette for roulette slices
+const ROUL_COLORS = [
+  '#2A9D8F','#C9A84C','#52B788','#4ECDC4',
+  '#E8C97E','#74C69D','#1B6B63','#9A7A2E',
+];
+const ROUL_JOKER_COLOR = '#E07070';
+
+let _roulAngle = 0;       // current rotation of wheel (radians)
+let _roulAnimId = null;
+
+function drawRoulette(targetAngle) {
+  const canvas = document.getElementById('roulCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, r = W/2 - 6;
+
+  // Build segments: alive books + joker slots
+  const alive = S.roulAlive;
+  const n = alive.length;
+  // Insert 1 joker every 3 books (max 2 jokers)
+  const jokerCount = Math.min(2, Math.floor(n / 3));
+  const segments = [];
+  alive.forEach((bi, i) => {
+    segments.push({ type: 'book', bookIdx: bi });
+    if (i < jokerCount) segments.push({ type: 'joker' });
+  });
+  const total = segments.length;
+  const sliceAngle = (2 * Math.PI) / total;
+  const angle = targetAngle !== undefined ? targetAngle : _roulAngle;
+
+  ctx.clearRect(0, 0, W, H);
+
+  segments.forEach((seg, i) => {
+    const start = angle + i * sliceAngle;
+    const end = start + sliceAngle;
+    // Slice
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, end);
+    ctx.closePath();
+    if (seg.type === 'joker') {
+      ctx.fillStyle = ROUL_JOKER_COLOR;
+    } else {
+      ctx.fillStyle = ROUL_COLORS[alive.indexOf(seg.bookIdx) % ROUL_COLORS.length];
+    }
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Label
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + sliceAngle / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'white';
+    ctx.font = `bold ${total > 8 ? 9 : 11}px Jost, sans-serif`;
+    const label = seg.type === 'joker'
+      ? '🃏 COMODÍN'
+      : truncate(S.books[seg.bookIdx].title, total > 6 ? 12 : 16);
+    ctx.fillText(label, r - 10, 4);
+    ctx.restore();
+  });
+
+  // Center circle
+  ctx.beginPath();
+  ctx.arc(cx, cy, 28, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  ctx.strokeStyle = '#C9A84C';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.fillStyle = '#1B6B63';
+  ctx.font = 'bold 14px Playfair Display, serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('✦', cx, cy);
+
+  // Store segments for hit testing
+  canvas._segments = segments;
+  canvas._sliceAngle = sliceAngle;
+  canvas._total = total;
+  _roulAngle = angle;
+}
+
+function truncate(str, n) {
+  return str.length > n ? str.slice(0, n-1) + '…' : str;
+}
+
+function spinRoulette() {
+  if (S.roulSpinning || S.roulResult) return;
+  S.roulSpinning = true;
+  render();
+
+  const canvas = document.getElementById('roulCanvas');
+  // Random spin: 5-10 full rotations + random extra
+  const extraAngle = Math.random() * 2 * Math.PI;
+  const totalRotation = (5 + Math.floor(Math.random() * 5)) * 2 * Math.PI + extraAngle;
+  const duration = 3500 + Math.random() * 1000;
+  const startAngle = _roulAngle;
+  const endAngle = startAngle + totalRotation;
+  const startTime = performance.now();
+
+  function easeOut(t) {
+    return 1 - Math.pow(1 - t, 4);
+  }
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    const currentAngle = startAngle + totalRotation * easeOut(t);
+    drawRoulette(currentAngle);
+    if (t < 1) {
+      _roulAnimId = requestAnimationFrame(animate);
+    } else {
+      // Determine which segment is at top (pointer at top = -PI/2 from center)
+      resolveRouletteResult(endAngle, canvas._segments, canvas._sliceAngle);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function resolveRouletteResult(finalAngle, segments, sliceAngle) {
+  // Pointer is at top of wheel. In canvas coords, top = -PI/2.
+  // We need to find which segment is under the pointer.
+  // Normalize: pointer position relative to wheel rotation
+  const pointerAngle = -Math.PI / 2; // top
+  // Offset into wheel
+  let rel = ((pointerAngle - finalAngle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+  const idx = Math.floor(rel / sliceAngle) % segments.length;
+  const seg = segments[idx];
+
+  S.roulSpinning = false;
+
+  if (seg.type === 'joker') {
+    // Random joker type
+    const jokerType = Math.random() < 0.5 ? 'again' : 'save';
+    S.roulResult = { type: 'joker', jokerType };
+    S.roulSavedIdx = null;
+  } else {
+    // Check if this book is saved
+    if (S.roulSavedIdx === seg.bookIdx) {
+      // Protected! Treat as joker-again
+      S.roulResult = { type: 'joker', jokerType: 'protected', bookIdx: seg.bookIdx };
+      S.roulSavedIdx = null;
+    } else {
+      S.roulResult = { type: 'eliminate', bookIdx: seg.bookIdx };
+    }
+  }
+  render();
+  setTimeout(() => drawRoulette(_roulAngle), 50);
+}
+
+function confirmElimination() {
+  const bookIdx = S.roulResult.bookIdx;
+  S.roulAlive = S.roulAlive.filter(i => i !== bookIdx);
+  S.roulElim.push(bookIdx);
+  S.roulResult = null;
+  S.roulSavedIdx = null;
+  S.roulSpinnerIdx++;
+
+  if (S.roulAlive.length === 1) {
+    S.winnerBookIdx = S.roulAlive[0];
+    S.votingMode = 'roulette';
+    go('s2results');
+  } else {
+    go('s2roulette');
+    setTimeout(() => drawRoulette(_roulAngle), 50);
+  }
+}
+
+function applyJokerAgain() {
+  S.roulResult = null;
+  // Same spinner gets to go again
+  go('s2roulette');
+  setTimeout(() => drawRoulette(_roulAngle), 50);
+}
+
+function saveBook(bi) {
+  S.roulSavedIdx = bi;
+  render();
+  setTimeout(() => drawRoulette(_roulAngle), 50);
+}
+
+function confirmSave() {
+  S.roulResult = null;
+  S.roulSpinnerIdx++;
+  go('s2roulette');
+  setTimeout(() => drawRoulette(_roulAngle), 50);
+}
+
+// Re-draw roulette after render when on that step
+function render() {
+  document.getElementById('root').innerHTML = (views[S.step] || vLanding)();
+  if (S.step === 's2roulette') {
+    setTimeout(() => drawRoulette(_roulAngle), 40);
+  }
+}
+
+// ════════════════════════════════════════════════════
 //  UTIL
 // ════════════════════════════════════════════════════
 function go(step){S.step=step;render();window.scrollTo({top:0,behavior:'smooth'});}
 function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 function resetAll(){
-  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],pairRounds:[],pairCurrentRound:0});
+  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],roulAlive:[],roulElim:[],roulSpinnerIdx:0,roulSpinning:false,roulResult:null,roulJokerPending:false,roulJokerType:null,roulSavedIdx:null});
   render();
 }
 
