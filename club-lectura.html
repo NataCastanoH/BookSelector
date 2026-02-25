@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Club de Lectura ✦</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal:#2A9D8F; --teal-light:#4ECDC4; --teal-dark:#1B6B63;
+  --aqua:#52B788; --aqua-light:#74C69D;
+  --gold:#C9A84C; --gold-light:#E8C97E; --gold-dark:#9A7A2E;
+  --cream:#FAF6EF; --cream-dark:#F0E8D8;
+  --text:#2C3E35; --text-light:#5A7065;
+  --shadow:0 8px 32px rgba(42,157,143,0.15);
+  --shadow-gold:0 4px 20px rgba(201,168,76,0.3);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 10% 20%,rgba(42,157,143,.08) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(201,168,76,.08) 0%,transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(82,183,136,.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.app{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:2rem 1.5rem;}
+
+/* HEADER */
+header{text-align:center;padding:2.5rem 0 1.5rem;}
+.ornament{color:var(--gold);font-size:1.2rem;letter-spacing:.5rem;opacity:.7;}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--teal-dark);line-height:1.15;margin:.4rem 0;}
+header h1 span{color:var(--gold);font-style:italic;}
+header p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--text-light);font-style:italic;margin-top:.4rem;}
+.hline{display:flex;align-items:center;gap:1rem;margin:1rem auto;max-width:400px;}
+.hline::before,.hline::after{content:'';flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+.hline span{color:var(--gold);}
+
+/* CARD */
+.card{background:white;border-radius:20px;padding:2.2rem;box-shadow:var(--shadow);margin-bottom:1.5rem;border:1px solid rgba(42,157,143,.1);animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.card-title{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--teal-dark);margin-bottom:.25rem;}
+.card-sub{font-family:'Cormorant Garamond',serif;font-size:.98rem;color:var(--text-light);font-style:italic;margin-bottom:1.4rem;}
+
+/* LANDING */
+.session-picker{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+@media(max-width:500px){.session-picker{grid-template-columns:1fr;}}
+.spb{padding:1.7rem 1.2rem;border-radius:20px;border:2px solid var(--cream-dark);background:white;cursor:pointer;text-align:center;transition:all .25s;box-shadow:var(--shadow);}
+.spb:hover{border-color:var(--teal-light);transform:translateY(-3px);box-shadow:0 12px 36px rgba(42,157,143,.18);}
+.spb.gold{border-color:rgba(201,168,76,.3);}
+.spb.gold:hover{border-color:var(--gold);box-shadow:0 12px 36px rgba(201,168,76,.2);}
+.spb-emoji{font-size:2.4rem;margin-bottom:.5rem;}
+.spb-num{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-light);margin-bottom:.25rem;font-family:'Playfair Display',serif;}
+.spb-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--teal-dark);font-weight:600;margin-bottom:.35rem;}
+.spb.gold .spb-title{color:var(--gold-dark);}
+.spb-desc{font-size:.78rem;color:var(--text-light);line-height:1.4;}
+
+/* INPUTS */
+.irow{display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap;}
+input[type=text],select,textarea{padding:.72rem 1rem;border:2px solid var(--cream-dark);border-radius:12px;font-family:'Jost',sans-serif;font-size:.93rem;color:var(--text);background:var(--cream);outline:none;transition:border-color .2s,box-shadow .2s;width:100%;}
+input[type=text]{flex:1;min-width:170px;width:auto;}
+input[type=text]:focus,select:focus,textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(42,157,143,.12);background:white;}
+input[type=text]::placeholder,textarea::placeholder{color:#aac5bf;}
+textarea{resize:vertical;min-height:65px;line-height:1.5;}
+select{cursor:pointer;}
+
+/* BUTTONS */
+.btn{padding:.72rem 1.4rem;border:none;border-radius:12px;font-family:'Jost',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;letter-spacing:.03em;white-space:nowrap;}
+.btn-p{background:linear-gradient(135deg,var(--teal),var(--teal-dark));color:white;box-shadow:0 4px 15px rgba(42,157,143,.35);}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(42,157,143,.45);}
+.btn-g{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:white;box-shadow:var(--shadow-gold);}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.5);}
+.btn-o{background:transparent;border:2px solid var(--teal-light);color:var(--teal);}
+.btn-o:hover{background:rgba(42,157,143,.05);}
+.btn-ghost{background:transparent;border:none;color:var(--text-light);font-size:.8rem;cursor:pointer;padding:.25rem .45rem;border-radius:8px;font-family:'Jost',sans-serif;}
+.btn-ghost:hover{color:#e07070;}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem;}
+.tag{display:flex;align-items:center;gap:.32rem;padding:.38rem .82rem;border-radius:50px;font-size:.86rem;}
+.tag-p{background:linear-gradient(135deg,rgba(42,157,143,.1),rgba(82,183,136,.1));border:1px solid rgba(42,157,143,.22);color:var(--teal-dark);}
+.tag-g{background:linear-gradient(135deg,rgba(201,168,76,.1),rgba(232,201,126,.1));border:1px solid rgba(201,168,76,.28);color:var(--gold-dark);}
+
+/* VOTING S1 */
+.voter-hd{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem;background:linear-gradient(135deg,rgba(42,157,143,.07),rgba(201,168,76,.04));border-radius:14px;margin-bottom:1.4rem;border:1px solid rgba(42,157,143,.14);}
+.voter-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--teal-dark);}
+.voter-prog{font-size:.78rem;color:var(--text-light);text-align:right;}
+.legend{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+.leg-item{display:flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--text-light);}
+.leg-dot{width:11px;height:11px;border-radius:50%;}
+.gvi{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.1rem;border-radius:12px;border:2px solid var(--cream-dark);margin-bottom:.55rem;transition:all .2s;background:white;}
+.gvi:hover{border-color:var(--teal-light);}
+.gvi.s3{border-color:var(--gold);background:rgba(201,168,76,.05);}
+.gvi.s2{border-color:var(--teal);background:rgba(42,157,143,.05);}
+.gvi.s1{border-color:var(--aqua-light);background:rgba(82,183,136,.05);}
+.gvi-name{font-size:.93rem;color:var(--text);}
+.pts-sel{display:flex;gap:.38rem;}
+.pts-btn{width:33px;height:33px;border-radius:50%;border:2px solid var(--cream-dark);background:white;cursor:pointer;font-family:'Jost',sans-serif;font-weight:600;font-size:.83rem;color:var(--text-light);transition:all .2s;display:flex;align-items:center;justify-content:center;}
+.pts-btn:hover{border-color:var(--teal-light);color:var(--teal);}
+.pts-btn.a3{background:var(--gold);border-color:var(--gold);color:white;box-shadow:0 2px 8px rgba(201,168,76,.4);}
+.pts-btn.a2{background:var(--teal);border-color:var(--teal);color:white;box-shadow:0 2px 8px rgba(42,157,143,.4);}
+.pts-btn.a1{background:var(--aqua-light);border-color:var(--aqua-light);color:white;}
+
+/* RESULTS */
+.rbar-wrap{margin-bottom:1.1rem;}
+.rbar-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.38rem;}
+.rbar-name{font-weight:500;font-size:.93rem;color:var(--text);}
+.rbar-pts{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold-dark);font-weight:600;}
+.rbar-bg{height:10px;background:var(--cream-dark);border-radius:50px;overflow:hidden;}
+.rbar-fill{height:100%;border-radius:50px;background:linear-gradient(to right,var(--teal),var(--gold));transition:width 1s cubic-bezier(.4,0,.2,1);}
+.rbar-wrap.win .rbar-name{color:var(--teal-dark);font-weight:700;}
+.rbar-wrap.win .rbar-fill{background:linear-gradient(to right,var(--gold),var(--gold-light));}
+.badge{display:inline-flex;align-items:center;gap:.25rem;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:white;padding:.18rem .65rem;border-radius:50px;font-size:.7rem;font-weight:500;margin-left:.35rem;vertical-align:middle;}
+
+/* WINNER BOX */
+.win-box{text-align:center;padding:2rem;background:linear-gradient(135deg,rgba(201,168,76,.09),rgba(42,157,143,.07));border-radius:18px;border:2px solid var(--gold-light);margin-bottom:1.4rem;}
+.win-box .big{font-size:2.6rem;margin-bottom:.7rem;}
+.win-box h2{font-family:'Playfair Display',serif;font-size:1.65rem;color:var(--teal-dark);margin-bottom:.4rem;}
+.win-box .wtitle{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold-dark);font-style:italic;margin-bottom:.3rem;}
+.win-box p{color:var(--text-light);font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;}
+
+/* BOOKS */
+.book-card{padding:.95rem 1.1rem;border:2px solid var(--cream-dark);border-radius:14px;margin-bottom:.75rem;background:white;transition:border-color .2s;}
+.book-card:hover{border-color:var(--teal-light);}
+.bk-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.35rem;}
+.bk-title{font-family:'Playfair Display',serif;font-size:.97rem;color:var(--teal-dark);font-style:italic;}
+.bk-author{font-size:.8rem;color:var(--text-light);margin-top:.12rem;}
+.bk-prop{font-size:.76rem;background:rgba(42,157,143,.1);color:var(--teal-dark);padding:.18rem .55rem;border-radius:50px;white-space:nowrap;}
+.bk-just{font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--text-light);font-style:italic;margin-top:.45rem;border-left:2px solid var(--gold-light);padding-left:.75rem;}
+.book-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:.7rem;}
+@media(max-width:500px){.book-form-grid{grid-template-columns:1fr;}}
+
+/* VOTING CLASSIC S2 */
+.vbook-item{display:flex;align-items:center;gap:1rem;padding:.85rem 1.1rem;border:2px solid var(--cream-dark);border-radius:12px;margin-bottom:.55rem;cursor:pointer;transition:all .2s;background:white;}
+.vbook-item:hover{border-color:var(--teal-light);}
+.vbook-item.sel{border-color:var(--gold);background:rgba(201,168,76,.05);}
+.vradio{width:20px;height:20px;border-radius:50%;border:2px solid var(--cream-dark);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.vbook-item.sel .vradio{border-color:var(--gold);background:var(--gold);}
+.vradio::after{content:'';width:8px;height:8px;border-radius:50%;background:white;opacity:0;transition:opacity .2s;}
+.vbook-item.sel .vradio::after{opacity:1;}
+
+/* VOTING MODE SELECTOR */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.5rem;}
+@media(max-width:500px){.mode-grid{grid-template-columns:1fr;}}
+.mode-btn{padding:1.5rem 1rem;border-radius:16px;border:2px solid var(--cream-dark);background:white;cursor:pointer;text-align:center;transition:all .25s;box-shadow:var(--shadow);}
+.mode-btn:hover{border-color:var(--teal-light);transform:translateY(-2px);}
+.mode-btn.gold{border-color:rgba(201,168,76,.3);}
+.mode-btn.gold:hover{border-color:var(--gold);}
+.mode-emoji{font-size:2rem;margin-bottom:.5rem;}
+.mode-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--teal-dark);font-weight:600;margin-bottom:.3rem;}
+.mode-btn.gold .mode-title{color:var(--gold-dark);}
+.mode-desc{font-size:.75rem;color:var(--text-light);line-height:1.35;}
+
+/* ─── MEMORY GAME ─── */
+.memory-header{text-align:center;margin-bottom:1.2rem;}
+.memory-header p{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-light);font-style:italic;}
+.mem-stats{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.mem-stat{text-align:center;}
+.mem-stat .val{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--teal-dark);font-weight:700;}
+.mem-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);}
+.mem-grid{display:grid;gap:.55rem;margin-bottom:1.2rem;}
+/* grid cols set inline by JS */
+.mem-card{aspect-ratio:2/3;border-radius:14px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);user-select:none;}
+.mem-card.flipped{transform:rotateY(180deg);}
+.mem-card.matched{transform:rotateY(180deg);cursor:default;}
+.mem-card.matched .mem-back{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.3);}
+.mem-card.eliminated .mem-back{border-color:#e07070;box-shadow:0 0 0 3px rgba(224,112,112,.25);opacity:.7;}
+.mem-front,.mem-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:.5rem;}
+.mem-front{background:linear-gradient(135deg,var(--teal-dark),var(--teal));border:2px solid var(--teal-light);}
+.mem-front-inner{font-size:1.6rem;opacity:.6;}
+.mem-back{background:white;border:2px solid var(--cream-dark);flex-direction:column;gap:.3rem;}
+.mem-book-title{font-family:'Playfair Display',serif;font-size:.68rem;color:var(--teal-dark);font-style:italic;text-align:center;line-height:1.2;}
+.mem-book-author{font-size:.6rem;color:var(--text-light);text-align:center;}
+.mem-book-prop{font-size:.58rem;background:rgba(42,157,143,.1);color:var(--teal-dark);padding:.12rem .45rem;border-radius:50px;text-align:center;}
+/* decoy cards */
+.mem-back.decoy{background:linear-gradient(135deg,rgba(42,157,143,.06),rgba(201,168,76,.06));border-color:var(--cream-dark);}
+.mem-decoy-icon{font-size:1.2rem;opacity:.45;}
+
+/* PAIRS MODE (tic-tac-toe feel) */
+.bracket-wrap{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.2rem;}
+.bracket-round-title{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--text-light);text-align:center;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+.matchup{display:flex;align-items:center;gap:.6rem;background:rgba(42,157,143,.04);border:1px solid rgba(42,157,143,.14);border-radius:14px;padding:.8rem 1rem;}
+.matchup-book{flex:1;padding:.65rem .9rem;border-radius:10px;border:2px solid var(--cream-dark);background:white;cursor:pointer;transition:all .2s;text-align:center;}
+.matchup-book:hover{border-color:var(--teal-light);}
+.matchup-book.winner-pick{border-color:var(--gold);background:rgba(201,168,76,.08);}
+.matchup-book.loser-pick{border-color:#ddd;background:#fafafa;opacity:.6;}
+.matchup-vs{font-family:'Playfair Display',serif;font-size:.85rem;color:var(--text-light);font-style:italic;flex-shrink:0;}
+.matchup-book-title{font-family:'Playfair Display',serif;font-size:.82rem;color:var(--teal-dark);font-style:italic;}
+.matchup-book-by{font-size:.7rem;color:var(--text-light);margin-top:.1rem;}
+
+/* TIE BANNER */
+.tie-banner{background:linear-gradient(135deg,rgba(201,168,76,.12),rgba(42,157,143,.08));border:2px solid var(--gold-light);border-radius:14px;padding:1.2rem;text-align:center;margin-bottom:1.2rem;animation:fadeUp .4s ease;}
+.tie-banner .tie-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold-dark);margin-bottom:.4rem;}
+.tie-banner p{font-size:.88rem;color:var(--text-light);}
+
+/* INFO BOX */
+.info-box{background:linear-gradient(135deg,rgba(42,157,143,.06),rgba(82,183,136,.04));border:1px solid rgba(42,157,143,.2);border-radius:12px;padding:.85rem 1rem;margin-bottom:1.1rem;font-family:'Cormorant Garamond',serif;font-size:.96rem;color:var(--text-light);font-style:italic;}
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--cream-dark),transparent);margin:1.3rem 0;}
+.confetti-overlay{position:fixed;inset:0;pointer-events:none;z-index:1000;}
+
+/* PROGRESS DOTS */
+.prog-dots{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.5rem;}
+.prog-dot{width:10px;height:10px;border-radius:50%;background:var(--cream-dark);transition:all .3s;}
+.prog-dot.active{background:var(--teal);transform:scale(1.2);}
+.prog-dot.done{background:var(--gold);}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="ornament">✦ ✦ ✦</div>
+    <h1>Club de <span>Lectura</span></h1>
+    <div class="hline"><span>📖</span></div>
+    <p>Un espacio para leer, debatir y crecer</p>
+  </header>
+  <div id="root"></div>
+</div>
+<canvas class="confetti-overlay" id="confetti"></canvas>
+
+<script>
+// ════════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════════
+const S = {
+  step: 'landing',
+  participants: [],
+  genres: [],
+  votes: {},
+  voterIdx: 0,
+  winnerGenre: null,
+  tiedGenres: null,       // array of genre names in tie (S1)
+  // session 2
+  books: [],
+  votingMode: null,          // 'classic' | 'memory' | 'pairs'
+  // classic voting
+  bookVotes: {},
+  bookVoterIdx: 0,
+  tiedBooks: null,           // array of book indices in tie
+  // memory game
+  memCards: [],              // {id, type:'book'|'decoy', bookIdx, flipped, matched, eliminated}
+  memFlipped: [],            // indices of currently face-up (not yet matched)
+  memLocked: false,
+  memMoves: 0,
+  memSurvivors: [],          // book indices still in game
+  // pairs/bracket
+  pairRounds: [],            // [{matchups:[{a,b}], winner:idx}, ...]
+  pairCurrentRound: 0,
+};
+
+// ════════════════════════════════════════════════════
+//  ROUTER
+// ════════════════════════════════════════════════════
+const views = {
+  landing:     vLanding,
+  setup:       vSetup,
+  genres:      vGenres,
+  voting:      vVoting,
+  results1:    vResults1,
+  genreTie:    vGenreTie,
+  genreTieVote: vGenreTieVote,
+  reviewVotes: vReviewVotes,
+  reviewVotesBooks: vReviewVotesBooks,
+  s2entry:     vS2Entry,
+  s2books:     vS2Books,
+  s2mode:      vS2Mode,
+  // classic
+  s2vote:      vS2Vote,
+  s2tie:       vS2Tie,
+  // memory
+  s2memory:    vS2Memory,
+  // final
+  s2results:   vS2Results,
+};
+
+function render() {
+  document.getElementById('root').innerHTML = (views[S.step] || vLanding)();
+}
+
+// ════════════════════════════════════════════════════
+//  LANDING
+// ════════════════════════════════════════════════════
+function vLanding() {
+  return `<div class="session-picker">
+    <div class="spb" onclick="go('setup')">
+      <div class="spb-emoji">🗳️</div>
+      <div class="spb-num">Sesión 1</div>
+      <div class="spb-title">Elegir género</div>
+      <div class="spb-desc">Propuesta de géneros y votación ponderada para elegir el del mes</div>
+    </div>
+    <div class="spb gold" onclick="go('s2entry')">
+      <div class="spb-emoji">📚</div>
+      <div class="spb-num">Sesión 2</div>
+      <div class="spb-title">Elegir libro</div>
+      <div class="spb-desc">Ya tenemos el género. Postulación y elección del libro de forma divertida</div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — SETUP
+// ════════════════════════════════════════════════════
+function vSetup() {
+  return `<div class="card">
+    <div class="card-title">👥 Participantes</div>
+    <div class="card-sub">Sesión 1 · Paso 1 de 3 — ¿Quiénes están hoy?</div>
+    <div class="irow">
+      <input type="text" id="pIn" placeholder="Nombre del participante…" onkeydown="if(event.key==='Enter')addP()">
+      <button class="btn btn-p" onclick="addP()">Agregar</button>
+    </div>
+    <div class="tags">${S.participants.map((p,i)=>`<span class="tag tag-p">${p}<button class="btn-ghost" style="padding:0 0 0 2px;font-size:1rem" onclick="del('participants',${i})">×</button></span>`).join('')}</div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <button class="btn btn-o" onclick="go('landing')">← Inicio</button>
+      ${S.participants.length>=2?`<button class="btn btn-g" onclick="go('genres')">Proponer géneros →</button>`:`<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Agrega al menos 2 participantes</span>`}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — GENRES
+// ════════════════════════════════════════════════════
+function vGenres() {
+  return `<div class="card">
+    <div class="card-title">📖 Géneros propuestos</div>
+    <div class="card-sub">Sesión 1 · Paso 2 de 3 — Cada quien propone uno, máx. 8</div>
+    <div class="info-box">Cada participante propone 1 género y lo justifica en 30 segundos. Con 6–8 opciones la votación fluye mejor.</div>
+    <div class="irow">
+      <input type="text" id="gIn" placeholder="Escribe un género…" onkeydown="if(event.key==='Enter')addG()">
+      <button class="btn btn-p" onclick="addG()">Agregar</button>
+    </div>
+    <div class="tags">${S.genres.map((g,i)=>`<span class="tag tag-g">${g}<button class="btn-ghost" style="padding:0 0 0 2px;font-size:1rem;color:#c9a84c80" onclick="del('genres',${i})">×</button></span>`).join('')}</div>
+    ${!S.genres.length?`<p style="font-size:.8rem;color:var(--text-light);margin-top:.8rem;font-style:italic">¡Aún no hay géneros — comiencen a proponer!</p>`:''}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <button class="btn btn-o" onclick="go('setup')">← Participantes</button>
+      ${S.genres.length>=2?`<button class="btn btn-g" onclick="startVoting()">Iniciar votación →</button>`:`<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Necesitas al menos 2 géneros</span>`}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — VOTING
+// ════════════════════════════════════════════════════
+function vVoting() {
+  const voter = S.participants[S.voterIdx];
+  const total = S.participants.length;
+  const mv = S.votes[voter] || {};
+  const assigned = Object.keys(mv).length;
+  const optA = Object.entries(mv).find(([,v])=>v===3)?.[0] || null;
+  const optB = Object.entries(mv).find(([,v])=>v===2)?.[0] || null;
+  const optC = Object.entries(mv).find(([,v])=>v===1)?.[0] || null;
+  const optLabels = {3:'A',2:'B',1:'C'};
+  const optColors = {3:'var(--gold)',2:'var(--teal)',1:'var(--aqua-light)'};
+  const optBg = {3:'rgba(201,168,76,.08)',2:'rgba(42,157,143,.07)',1:'rgba(82,183,136,.07)'};
+  return `<div class="card">
+    <div class="voter-hd">
+      <div>
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin-bottom:.2rem">🗳 Turno de votar</div>
+        <div class="voter-name">${voter}</div>
+      </div>
+      <div class="voter-prog">${S.voterIdx+1} / ${total}<br><small style="color:var(--teal)">Resultados ocultos ✦</small></div>
+    </div>
+    <div class="legend" style="margin-bottom:1.2rem">
+      <div class="leg-item"><div class="leg-dot" style="background:var(--gold)"></div><strong>A</strong> — Favorita</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--teal)"></div><strong>B</strong> — Segunda</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--aqua-light)"></div><strong>C</strong> — Tercera</div>
+    </div>
+    ${S.genres.map(g => {
+      const pts = mv[g] || 0;
+      const borderColor = pts ? optColors[pts] : 'var(--cream-dark)';
+      const bgColor = pts ? optBg[pts] : 'white';
+      return `<div class="gvi" style="border-color:${borderColor};background:${bgColor}">
+        <span class="gvi-name">${g}</span>
+        <div class="pts-sel">
+          ${[3,2,1].map(p => {
+            const active = pts === p;
+            const usedByOther = (p===3&&optA&&optA!==g)||(p===2&&optB&&optB!==g)||(p===1&&optC&&optC!==g);
+            return `<button class="pts-btn ${active?'a'+p:''}"
+              style="${active?'background:'+optColors[p]+';border-color:'+optColors[p]+';color:white;':''}${usedByOther?'opacity:.28;cursor:not-allowed;':''}"
+              onclick="${usedByOther?'void 0':` assignVote('${esc(voter)}','${esc(g)}',${p})`}"
+              title="Opción ${optLabels[p]}">${optLabels[p]}</button>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <div style="font-size:.8rem;color:var(--text-light);display:flex;gap:.7rem;flex-wrap:wrap">
+        ${optA?`<span style="color:var(--gold-dark)">A: <em>${optA}</em></span>`:`<span style="opacity:.4">A: —</span>`}
+        ${optB?`<span style="color:var(--teal-dark)">B: <em>${optB}</em></span>`:`<span style="opacity:.4">B: —</span>`}
+        ${optC?`<span style="color:var(--aqua)">C: <em>${optC}</em></span>`:`<span style="opacity:.4">C: —</span>`}
+      </div>
+      ${assigned===3
+        ? `<button class="btn btn-g" onclick="nextVoter()">${S.voterIdx<total-1?'Siguiente →':'Ver resultados ✦'}</button>`
+        : `<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Elige tus 3 opciones</span>`}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — RESULTS
+// ════════════════════════════════════════════════════
+function vResults1() {
+  const sc = calcGenreScores();
+  const sorted = Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxPts = sorted[0][1];
+  const tied = sorted.filter(([,v])=>v===maxPts).map(([g])=>g);
+
+  if (tied.length > 1) {
+    // Store tie info but don't set winner yet
+    S.tiedGenres = tied;
+    return `<div class="card">
+      <div class="card-title">📊 Resultados · Sesión 1</div>
+      <div class="card-sub">Votación ponderada — ${S.participants.length} participantes</div>
+      <div class="tie-banner">
+        <div class="tie-title">⚖️ ¡Empate!</div>
+        <p>Los siguientes géneros quedaron empatados con <strong>${maxPts} puntos</strong>. Votamos nuevamente solo entre ellos.</p>
+      </div>
+      ${sorted.map(([g,pts],i)=>`<div class="rbar-wrap ${pts===maxPts?'win':''}">
+        <div class="rbar-hd">
+          <span class="rbar-name">${pts===maxPts?'🔁 ':''}${g}${pts===maxPts?'<span class="badge">⚖️ Empate</span>':''}</span>
+          <span class="rbar-pts">${pts} pts</span>
+        </div>
+        <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
+      </div>`).join('')}
+      <div class="divider"></div>
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+        <button class="btn btn-o" onclick="S._reviewBack='results1';go('reviewVotes')">🔍 Ver votación</button>
+        <button class="btn btn-g" onclick="startGenreTieBreaker()">Iniciar desempate →</button>
+      </div>
+    </div>`;
+  }
+
+  // Clear winner
+  S.winnerGenre = sorted[0][0];
+  S.tiedGenres = null;
+  setTimeout(()=>confetti(),100);
+  return `<div class="card">
+    <div class="card-title">🏆 Resultados · Sesión 1</div>
+    <div class="card-sub">Votación ponderada — ${S.participants.length} participantes</div>
+    <div class="win-box">
+      <div class="big">🎉</div>
+      <h2>¡El género elegido es!</h2>
+      <div class="wtitle">${S.winnerGenre}</div>
+      <p>Con ${maxPts} puntos · un gran mes de lectura nos espera</p>
+    </div>
+    ${sorted.map(([g,pts],i)=>`<div class="rbar-wrap ${i===0?'win':''}">
+      <div class="rbar-hd"><span class="rbar-name">${i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':''}${g}${i===0?'<span class="badge">✦ Ganador</span>':''}</span><span class="rbar-pts">${pts} pts</span></div>
+      <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
+    </div>`).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn btn-o" onclick="go('landing')">← Inicio</button>
+        <button class="btn btn-o" onclick="S._reviewBack='results1';go('reviewVotes')">🔍 Ver votación</button>
+      </div>
+      <button class="btn btn-g" onclick="prepS2()">Continuar a Sesión 2 →</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — GENRE TIE ANNOUNCE
+// ════════════════════════════════════════════════════
+function vGenreTie() {
+  return `<div class="card">
+    <div class="card-title">⚖️ Desempate de géneros</div>
+    <div class="card-sub">Solo votan entre los géneros empatados · mismas reglas: A, B, C</div>
+    <div class="tie-banner">
+      <div class="tie-title">Géneros en desempate</div>
+      <p>Cada participante elige su orden de preferencia entre estos géneros.</p>
+    </div>
+    ${S.tiedGenres.map(g=>`<div class="book-card"><div class="bk-title" style="font-size:1rem;font-style:normal;color:var(--teal-dark)">${g}</div></div>`).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-g" onclick="goGenreTieVote()">Empezar desempate →</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S1 — GENRE TIE VOTING (reuses same A/B/C logic but only tied genres)
+// ════════════════════════════════════════════════════
+function vGenreTieVote() {
+  const voter = S.participants[S.voterIdx];
+  const total = S.participants.length;
+  const mv = S.votes[voter] || {};
+  // only count votes for tied genres
+  const pool = S.tiedGenres;
+  const assigned = Object.keys(mv).filter(g=>pool.includes(g)).length;
+  const needed = Math.min(3, pool.length); // if only 2 tied, only A+B needed
+  const optA = Object.entries(mv).find(([g,v])=>v===3&&pool.includes(g))?.[0] || null;
+  const optB = Object.entries(mv).find(([g,v])=>v===2&&pool.includes(g))?.[0] || null;
+  const optC = pool.length >= 3 ? (Object.entries(mv).find(([g,v])=>v===1&&pool.includes(g))?.[0] || null) : 'skip';
+  const optLabels = {3:'A',2:'B',1:'C'};
+  const optColors = {3:'var(--gold)',2:'var(--teal)',1:'var(--aqua-light)'};
+  const optBg = {3:'rgba(201,168,76,.08)',2:'rgba(42,157,143,.07)',1:'rgba(82,183,136,.07)'};
+  const allDone = assigned >= needed;
+
+  return `<div class="card">
+    <div class="tie-banner" style="margin-bottom:1.2rem">
+      <div class="tie-title">⚖️ Desempate</div>
+      <p>Solo entre los géneros empatados${pool.length===2?' — elige A y B':''}</p>
+    </div>
+    <div class="voter-hd">
+      <div>
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin-bottom:.2rem">🗳 Turno de votar</div>
+        <div class="voter-name">${voter}</div>
+      </div>
+      <div class="voter-prog">${S.voterIdx+1} / ${total}<br><small style="color:var(--teal)">Resultados ocultos ✦</small></div>
+    </div>
+    ${pool.map(g => {
+      const pts = mv[g] || 0;
+      const borderColor = pts ? optColors[pts] : 'var(--cream-dark)';
+      const bgColor = pts ? optBg[pts] : 'white';
+      const buttons = pool.length >= 3 ? [3,2,1] : [3,2]; // only A+B if 2 genres
+      return `<div class="gvi" style="border-color:${borderColor};background:${bgColor}">
+        <span class="gvi-name">${g}</span>
+        <div class="pts-sel">
+          ${buttons.map(p => {
+            const active = pts === p;
+            const usedByOther = (p===3&&optA&&optA!==g)||(p===2&&optB&&optB!==g)||(p===1&&optC&&optC!==g&&optC!=='skip');
+            return `<button class="pts-btn ${active?'a'+p:''}"
+              style="${active?'background:'+optColors[p]+';border-color:'+optColors[p]+';color:white;':''}${usedByOther?'opacity:.28;cursor:not-allowed;':''}"
+              onclick="${usedByOther?'void 0':` assignVote('${esc(voter)}','${esc(g)}',${p})`}"
+              title="Opción ${optLabels[p]}">${optLabels[p]}</button>`;
+          }).join('')}
+        </div>
+      </div>`;
+    }).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <div style="font-size:.8rem;color:var(--text-light);display:flex;gap:.7rem;flex-wrap:wrap">
+        ${optA?`<span style="color:var(--gold-dark)">A: <em>${optA}</em></span>`:`<span style="opacity:.4">A: —</span>`}
+        ${optB?`<span style="color:var(--teal-dark)">B: <em>${optB}</em></span>`:`<span style="opacity:.4">B: —</span>`}
+      </div>
+      ${allDone
+        ? `<button class="btn btn-g" onclick="nextGenreTieVoter()">${S.voterIdx<total-1?'Siguiente →':'Ver resultado ✦'}</button>`
+        : `<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Elige ${pool.length>=3?'tus 3 opciones':'A y B'}</span>`}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  REVIEW VOTES
+// ════════════════════════════════════════════════════
+function vReviewVotes() {
+  // Always show ALL genres and ALL votes — never filter by tiedGenres here
+  const allGenres = S.genres;
+  const optLabels = {3:'A', 2:'B', 1:'C'};
+  const optColors = {3:'var(--gold-dark)', 2:'var(--teal-dark)', 1:'var(--aqua)'};
+  const optBg     = {3:'rgba(201,168,76,.12)', 2:'rgba(42,157,143,.1)', 1:'rgba(82,183,136,.1)'};
+  const optBorder = {3:'rgba(201,168,76,.35)', 2:'rgba(42,157,143,.3)', 1:'rgba(82,183,136,.3)'};
+
+  // Compute total scores across ALL votes (full tally, not filtered)
+  const sc = {};
+  allGenres.forEach(g => sc[g] = 0);
+  Object.values(S.votes).forEach(vm =>
+    Object.entries(vm).forEach(([g, p]) => { if (sc[g] !== undefined) sc[g] += p; })
+  );
+  const sorted = Object.entries(sc).sort((a,b) => b[1] - a[1]);
+  const maxPts = sorted[0]?.[1] || 1;
+
+  return `<div class="card">
+    <div class="card-title">🔍 Revisión de votación</div>
+    <div class="card-sub">Así votó cada participante</div>
+
+    ${S.participants.map(p => {
+      const mv = S.votes[p] || {};
+      // Show all 3 options (A B C) for every participant, mapped to all genres
+      const rows = [3, 2, 1].map(pts => {
+        const genre = Object.entries(mv).find(([, v]) => v === pts)?.[0] || null;
+        return { label: optLabels[pts], pts, genre };
+      });
+      return `<div style="padding:.9rem 1.1rem;border:2px solid var(--cream-dark);border-radius:14px;margin-bottom:.65rem;background:white">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--teal-dark);margin-bottom:.6rem">${p}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.45rem">
+          ${rows.map(({label, pts, genre}) =>
+            genre
+              ? `<span style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:50px;background:${optBg[pts]};border:1px solid ${optBorder[pts]};font-size:.82rem;color:${optColors[pts]}">
+                  <strong>${label}</strong> · ${genre}
+                </span>`
+              : `<span style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;border-radius:50px;background:var(--cream-dark);font-size:.82rem;color:var(--text-light);opacity:.5">
+                  <strong>${label}</strong> · —
+                </span>`
+          ).join('')}
+        </div>
+      </div>`;
+    }).join('')}
+
+    <div class="divider"></div>
+
+    <div class="card-title" style="font-size:1rem;margin-bottom:.8rem">Puntaje total acumulado</div>
+    ${sorted.map(([g, pts], i) => `<div class="rbar-wrap ${i===0?'win':''}">
+      <div class="rbar-hd">
+        <span class="rbar-name">${i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':''}${g}</span>
+        <span class="rbar-pts">${pts} pts</span>
+      </div>
+      <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
+    </div>`).join('')}
+
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-start">
+      <button class="btn btn-o" onclick="go(S._reviewBack||'results1')">← Volver</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — ENTRY (directo)
+// ════════════════════════════════════════════════════
+function vS2Entry() {
+  return `<div class="card">
+    <div class="card-title">📚 Sesión 2 · Acceso directo</div>
+    <div class="card-sub">Ingresa el género elegido y los participantes de hoy</div>
+    <div class="info-box">Si ya eligieron el género en una sesión anterior, ingrésalo aquí para continuar.</div>
+    <div style="margin-bottom:1rem">
+      <label style="font-size:.78rem;color:var(--text-light);display:block;margin-bottom:.38rem;text-transform:uppercase;letter-spacing:.05em">Género elegido *</label>
+      <input type="text" id="s2g" placeholder="Ej: Literatura latinoamericana…" value="${escAttr(S.winnerGenre||'')}">
+    </div>
+    <div style="margin-bottom:.5rem">
+      <label style="font-size:.78rem;color:var(--text-light);display:block;margin-bottom:.38rem;text-transform:uppercase;letter-spacing:.05em">Participantes *</label>
+      <div class="irow">
+        <input type="text" id="s2p" placeholder="Nombre del participante…" onkeydown="if(event.key==='Enter')addS2P()">
+        <button class="btn btn-p" onclick="addS2P()">Agregar</button>
+      </div>
+      <div class="tags">${S.participants.map((p,i)=>`<span class="tag tag-p">${p}<button class="btn-ghost" style="padding:0 0 0 2px;font-size:1rem" onclick="del('participants',${i});render()">×</button></span>`).join('')}</div>
+    </div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
+      <button class="btn btn-o" onclick="go('landing')">← Inicio</button>
+      <button class="btn btn-g" onclick="confirmS2Entry()">Continuar →</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — BOOKS
+// ════════════════════════════════════════════════════
+function vS2Books() {
+  const genre = S.winnerGenre || 'género elegido';
+  const unposted = S.participants.filter(p=>!S.books.find(b=>b.participant===p));
+  return `<div class="card">
+    <div class="card-title">📖 Postulación de libros</div>
+    <div class="card-sub">Sesión 2 · Género: <em style="color:var(--gold-dark)">${genre}</em></div>
+    <div class="info-box">Cada participante postula 1 libro. Disponible en Colombia · máx. ~400 páginas.</div>
+    ${unposted.length?`
+    <div style="background:rgba(42,157,143,.04);border:1px solid rgba(42,157,143,.14);border-radius:14px;padding:1.1rem;margin-bottom:1rem">
+      <div style="font-size:.82rem;color:var(--text-light);margin-bottom:.75rem">Pendientes: ${unposted.map(p=>`<span style="color:var(--teal);font-weight:500">${p}</span>`).join(', ')}</div>
+      <select id="bPart" style="margin-bottom:.6rem"><option value="">— ¿Quién postula? —</option>${unposted.map(p=>`<option value="${escAttr(p)}">${p}</option>`).join('')}</select>
+      <div class="book-form-grid">
+        <input type="text" id="bTitle" placeholder="Título del libro">
+        <input type="text" id="bAuthor" placeholder="Autor / Autora">
+      </div>
+      <input type="text" id="bCountry" placeholder="País de origen" style="margin-bottom:.65rem">
+      <textarea id="bJust" placeholder="¿Por qué recomiendas este libro? (máx. 5 líneas)" style="margin-bottom:.8rem"></textarea>
+      <button class="btn btn-p" onclick="addBook()">➕ Agregar libro</button>
+    </div>`:
+    `<p style="color:var(--teal);font-style:italic;font-size:.88rem;margin-bottom:1rem">✓ Todos han postulado su libro.</p>`}
+    ${S.books.length?`
+    <div class="divider"></div>
+    <div class="card-title" style="font-size:1rem;margin-bottom:.75rem">Libros en carrera</div>
+    ${S.books.map((b,i)=>`<div class="book-card">
+      <div class="bk-hd">
+        <div><div class="bk-title">${b.title}</div><div class="bk-author">por ${b.author}${b.country?' · '+b.country:''}</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.25rem">
+          <span class="bk-prop">${b.participant}</span>
+          <button class="btn-ghost" style="font-size:.7rem" onclick="removeBook(${i})">eliminar</button>
+        </div>
+      </div>
+      ${b.justification?`<div class="bk-just">${b.justification}</div>`:''}
+    </div>`).join('')}`:''}
+    ${S.books.length>=2?`
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-g" onclick="go('s2mode')">¡Elegir libro! →</button>
+    </div>`:''}
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — CHOOSE VOTING MODE
+// ════════════════════════════════════════════════════
+function vS2Mode() {
+  return `<div class="card">
+    <div class="card-title">🎯 ¿Cómo elegimos el libro?</div>
+    <div class="card-sub">Elige el método de votación para hoy</div>
+    <div class="mode-grid">
+      <div class="mode-btn" onclick="startClassicVoting()">
+        <div class="mode-emoji">🗳️</div>
+        <div class="mode-title">Votación secreta</div>
+        <div class="mode-desc">Cada participante vota en privado. Si hay empate, se repite entre los empatados.</div>
+      </div>
+      <div class="mode-btn gold" onclick="startMemoryGame()">
+        <div class="mode-emoji">🃏</div>
+        <div class="mode-title">Memory literario</div>
+        <div class="mode-desc">Los libros se esconden en un tablero. El último que quede sin descubrir… ¡gana!</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-start">
+      <button class="btn btn-o" onclick="go('s2books')">← Volver</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — CLASSIC VOTING
+// ════════════════════════════════════════════════════
+function vS2Vote() {
+  const pool = S.tiedBooks !== null ? S.tiedBooks : S.books.map((_,i)=>i);
+  const voter = S.participants[S.bookVoterIdx];
+  const total = S.participants.length;
+  const myVote = S.bookVotes[voter] ?? null;
+  const isTieBreaker = S.tiedBooks !== null;
+  return `<div class="card">
+    ${isTieBreaker?`<div class="tie-banner"><div class="tie-title">⚖️ Desempate</div><p>Hubo empate. Solo votan entre los libros empatados.</p></div>`:''}
+    <div class="voter-hd">
+      <div>
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin-bottom:.2rem">🗳 Turno de votar</div>
+        <div class="voter-name">${voter}</div>
+      </div>
+      <div class="voter-prog">${S.bookVoterIdx+1} / ${total}<br><small style="color:var(--teal)">Resultados ocultos ✦</small></div>
+    </div>
+    <div class="info-box">Elige el libro que más te gustaría leer este mes.</div>
+    ${pool.map(bi=>{const b=S.books[bi];return`<div class="vbook-item ${myVote===bi?'sel':''}" onclick="selectBook('${esc(voter)}',${bi})">
+      <div class="vradio"></div>
+      <div style="flex:1">
+        <div class="bk-title" style="font-size:.93rem">${b.title}</div>
+        <div class="bk-author">por ${b.author} · Postulado por ${b.participant}</div>
+        ${b.justification?`<div class="bk-just" style="margin-top:.3rem;font-size:.82rem">${b.justification}</div>`:''}
+      </div>
+    </div>`}).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem">
+      <span></span>
+      ${myVote!==null?`<button class="btn btn-g" onclick="nextBookVoter()">${S.bookVoterIdx<total-1?'Siguiente →':'¡Ver resultado! ✦'}</button>`:`<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Selecciona un libro para continuar</span>`}
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — TIE SCREEN (shown between tie rounds)
+// ════════════════════════════════════════════════════
+function vS2Tie() {
+  const tied = S.tiedBooks.map(i=>S.books[i]);
+  return `<div class="card">
+    <div class="tie-banner">
+      <div class="tie-title">⚖️ ¡Empate!</div>
+      <p>Los siguientes libros quedaron empatados. Votamos nuevamente entre ellos.</p>
+    </div>
+    ${tied.map(b=>`<div class="book-card"><div class="bk-hd"><div><div class="bk-title">${b.title}</div><div class="bk-author">por ${b.author}</div></div><span class="bk-prop">${b.participant}</span></div></div>`).join('')}
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-end">
+      <button class="btn btn-g" onclick="startTieBreaker()">Iniciar desempate →</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — MEMORY GAME
+// ════════════════════════════════════════════════════
+function vS2Memory() {
+  const cards = S.memCards;
+  const total = cards.length;
+  const survivors = S.memSurvivors.length;
+  const eliminated = S.books.length - survivors;
+  // figure out cols
+  const cols = Math.ceil(Math.sqrt(total));
+  return `<div class="card">
+    <div class="card-title">🃏 Memory Literario</div>
+    <div class="card-sub">Encuentra los libros — el último en ser descubierto gana</div>
+    <div class="info-box">
+      Voltea fichas para encontrar los libros. Cada libro que descubras queda <strong>eliminado</strong>.
+      Las fichas que se queden boca abajo son cartas vacías (señuelos). El libro que <em>nadie encuentre</em> al final es el ganador.
+    </div>
+    <div class="mem-stats">
+      <div class="mem-stat"><div class="val">${S.memMoves}</div><div class="lbl">Movimientos</div></div>
+      <div class="mem-stat"><div class="val">${survivors}</div><div class="lbl">Libros vivos</div></div>
+      <div class="mem-stat"><div class="val">${eliminated}</div><div class="lbl">Eliminados</div></div>
+    </div>
+    <div class="mem-grid" style="grid-template-columns:repeat(${cols},1fr)">
+      ${cards.map((c,i)=>{
+        let cls='mem-card';
+        if(c.flipped||c.matched||c.eliminated) cls+=' flipped';
+        if(c.matched) cls+=' matched';
+        if(c.eliminated) cls+=' eliminated';
+        const book = c.type==='book' ? S.books[c.bookIdx] : null;
+        const backContent = c.type==='book'
+          ? `<div class="mem-book-title">${book.title}</div><div class="mem-book-author">${book.author}</div><div class="mem-book-prop">${book.participant}</div>`
+          : `<div class="mem-back decoy"><div class="mem-decoy-icon">📄</div></div>`;
+        const clickable = !c.flipped && !c.matched && !c.eliminated && !S.memLocked;
+        return `<div class="${cls}" ${clickable?`onclick="flipCard(${i})"`:'style="cursor:default"'}>
+          <div class="mem-front"><div class="mem-front-inner">📚</div></div>
+          <div class="mem-back ${c.type==='decoy'?'decoy':''}">${c.type==='book'?`<div class="mem-book-title">${book.title}</div><div class="mem-book-author">${book.author}</div><div class="mem-book-prop">${book.participant}</div>`:`<div class="mem-decoy-icon">📄</div>`}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    ${memIsOver() ? renderMemResult() : `
+    <div style="text-align:center;margin-top:.5rem">
+      <span style="font-size:.8rem;color:var(--text-light);font-style:italic">Voltea las fichas para encontrar libros · ${S.memSurvivors.length} libro${S.memSurvivors.length!==1?'s':''} por descubrir</span>
+    </div>`}
+  </div>`;
+}
+
+function renderMemResult() {
+  if (S.memSurvivors.length === 0) {
+    // everyone found — last found is winner (last eliminated)
+    return `<div class="divider"></div><div style="text-align:center"><button class="btn btn-g" onclick="go('s2results')">Ver ganador →</button></div>`;
+  }
+  if (S.memSurvivors.length === 1) {
+    return `<div class="divider"></div>
+    <div class="win-box" style="margin-bottom:0">
+      <div class="big">🏆</div>
+      <h2>¡Libro superviviente!</h2>
+      <div class="wtitle">"${S.books[S.memSurvivors[0]].title}"</div>
+      <p>de ${S.books[S.memSurvivors[0]].author} — nadie lo encontró</p>
+    </div>
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn btn-g" onclick="finishMemory()">¡Es el ganador! →</button></div>`;
+  }
+  return '';
+}
+
+function memIsOver() {
+  return S.memSurvivors.length <= 1 || S.memCards.filter(c=>c.type==='book'&&!c.eliminated).length === 0;
+}
+
+// ════════════════════════════════════════════════════
+//  S2 — FINAL RESULTS
+// ════════════════════════════════════════════════════
+function vS2Results() {
+  const winner = S.books[S.winnerBookIdx];
+  // build score map for display (classic only)
+  let scoreRows = '';
+  if (S.votingMode === 'classic') {
+    const sc = {};
+    S.books.forEach((_,i)=>sc[i]=0);
+    Object.values(S.bookVotes).forEach(i=>{sc[i]=(sc[i]||0)+1;});
+    const sorted = Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+    const maxPts = sorted[0][1];
+    scoreRows = `<div class="card-title" style="font-size:1rem;margin-bottom:.8rem">Votación completa</div>
+    ${sorted.map(([idx,pts],rank)=>{const b=S.books[parseInt(idx)];return`<div class="rbar-wrap ${rank===0?'win':''}">
+      <div class="rbar-hd"><span class="rbar-name">${rank===0?'🥇 ':rank===1?'🥈 ':rank===2?'🥉 ':''}<em>${b.title}</em> — ${b.author}${rank===0?'<span class="badge">✦ Elegido</span>':''}</span><span class="rbar-pts">${pts} voto${pts!==1?'s':''}</span></div>
+      <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
+    </div>`}).join('')}`;
+  } else if (S.votingMode === 'memory') {
+    scoreRows = `<div class="info-box">¡${winner.title} fue el libro que ningún participante descubrió en el Memory! El azar y la suerte lo eligieron. 🎲</div>`;
+  }
+  setTimeout(()=>confetti(),100);
+  return `<div class="card">
+    <div class="card-title">🏆 Resultado Final · Sesión 2</div>
+    <div class="card-sub">El club ha elegido el libro del mes</div>
+    <div class="win-box">
+      <div class="big">📚✨</div>
+      <h2>¡Este mes leeremos!</h2>
+      <div class="wtitle">"${winner.title}"</div>
+      <p>de ${winner.author}</p>
+      <p style="margin-top:.5rem;color:var(--gold-dark);font-style:normal;font-weight:500">Postulado por ${winner.participant}</p>
+    </div>
+    ${scoreRows}
+    <div class="divider"></div>
+    <div style="text-align:center;padding:.4rem 0">
+      <div style="font-family:'Playfair Display',serif;font-size:.95rem;color:var(--text-light);font-style:italic">¡Feliz lectura! 📖</div>
+      <div style="display:flex;justify-content:center;gap:.7rem;margin-top:1rem;flex-wrap:wrap">
+        ${S.votingMode==='classic'?`<button class="btn btn-o" onclick="S._reviewBack='s2results';go('reviewVotesBooks')">🔍 Ver votación</button>`:''}
+        <button class="btn btn-o" onclick="resetAll()">↩ Nuevo ciclo</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  REVIEW BOOK VOTES (S2 classic)
+// ════════════════════════════════════════════════════
+function vReviewVotesBooks() {
+  const sc = {};
+  S.books.forEach((_,i)=>sc[i]=0);
+  Object.values(S.bookVotes).forEach(i=>{sc[i]=(sc[i]||0)+1;});
+  const sorted = Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxPts = sorted[0]?.[1] || 1;
+
+  return `<div class="card">
+    <div class="card-title">🔍 Revisión · votos por libro</div>
+    <div class="card-sub">Así votó cada participante</div>
+
+    ${S.participants.map(p => {
+      const vi = S.bookVotes[p] ?? null;
+      const book = vi !== null ? S.books[vi] : null;
+      return `<div style="padding:.9rem 1.1rem;border:2px solid var(--cream-dark);border-radius:14px;margin-bottom:.6rem;background:white;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem">
+        <span style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--teal-dark)">${p}</span>
+        ${book
+          ? `<span style="display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .85rem;border-radius:50px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);font-size:.82rem;color:var(--gold-dark)">
+              📖 <em>${book.title}</em>
+            </span>`
+          : `<span style="font-size:.8rem;color:var(--text-light);font-style:italic">Sin voto</span>`}
+      </div>`;
+    }).join('')}
+
+    <div class="divider"></div>
+    <div class="card-title" style="font-size:1rem;margin-bottom:.8rem">Puntaje acumulado</div>
+    ${sorted.map(([idx,pts],i) => {
+      const b = S.books[parseInt(idx)];
+      return `<div class="rbar-wrap ${i===0?'win':''}">
+        <div class="rbar-hd">
+          <span class="rbar-name">${i===0?'🥇 ':i===1?'🥈 ':''}<em>${b.title}</em> — ${b.author}</span>
+          <span class="rbar-pts">${pts} voto${pts!==1?'s':''}</span>
+        </div>
+        <div class="rbar-bg"><div class="rbar-fill" style="width:${maxPts?(pts/maxPts*100):0}%"></div></div>
+      </div>`;
+    }).join('')}
+
+    <div class="divider"></div>
+    <div style="display:flex;justify-content:flex-start">
+      <button class="btn btn-o" onclick="go('s2results')">← Volver</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════
+//  HANDLERS — S1
+// ════════════════════════════════════════════════════
+function addP(){const el=document.getElementById('pIn');const v=el.value.trim();if(v&&!S.participants.includes(v)){S.participants.push(v);el.value='';render();}}
+function addS2P(){const el=document.getElementById('s2p');const v=el.value.trim();if(v&&!S.participants.includes(v)){S.participants.push(v);el.value='';render();}}
+function addG(){const el=document.getElementById('gIn');const v=el.value.trim();if(v&&!S.genres.includes(v)&&S.genres.length<9){S.genres.push(v);el.value='';render();}}
+function del(arr,i){S[arr].splice(i,1);render();}
+function startVoting(){S.votes={};S.voterIdx=0;go('voting');}
+function assignVote(voter,genre,pts){
+  if(!S.votes[voter])S.votes[voter]={};
+  const cur=S.votes[voter][genre]||0;
+  if(cur===pts){delete S.votes[voter][genre];}
+  else{const u=Object.entries(S.votes[voter]).find(([g,p])=>p===pts&&g!==genre);if(u)delete S.votes[voter][u[0]];S.votes[voter][genre]=pts;}
+  render();
+}
+function nextVoter(){S.voterIdx<S.participants.length-1?(S.voterIdx++,go('voting')):go('results1');}
+function calcGenreScores(){
+  // only count genres in the active pool (full list or tied subset)
+  const pool = S.tiedGenres || S.genres;
+  const sc={};
+  pool.forEach(g=>sc[g]=0);
+  Object.values(S.votes).forEach(vm=>Object.entries(vm).forEach(([g,p])=>{if(sc[g]!==undefined)sc[g]=(sc[g]||0)+p;}));
+  return sc;
+}
+function startGenreTieBreaker(){
+  // Reset votes for new round (keeping tiedGenres set)
+  S.votes={};S.voterIdx=0;go('genreTie');
+}
+function goGenreTieVote(){S.voterIdx=0;go('genreTieVote');}
+function nextGenreTieVoter(){
+  if(S.voterIdx<S.participants.length-1){S.voterIdx++;go('genreTieVote');}
+  else{resolveGenreTie();}
+}
+function resolveGenreTie(){
+  const sc = calcGenreScores();
+  const sorted = Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxPts = sorted[0][1];
+  const tied = sorted.filter(([,v])=>v===maxPts).map(([g])=>g);
+  if(tied.length===1){
+    S.winnerGenre=tied[0];S.tiedGenres=null;go('results1');
+  } else {
+    // Still tied — update tiedGenres and go again
+    S.tiedGenres=tied;S.votes={};S.voterIdx=0;go('genreTie');
+  }
+}
+function prepS2(){S.books=[];S.bookVotes={};S.bookVoterIdx=0;S.tiedBooks=null;S.winnerBookIdx=null;go('s2books');}
+function confirmS2Entry(){
+  const g=document.getElementById('s2g')?.value.trim();
+  if(!g){alert('Por favor ingresa el género elegido.');return;}
+  if(S.participants.length<2){alert('Agrega al menos 2 participantes.');return;}
+  S.winnerGenre=g;S.books=[];S.bookVotes={};S.bookVoterIdx=0;S.tiedBooks=null;S.winnerBookIdx=null;
+  go('s2books');
+}
+
+// ════════════════════════════════════════════════════
+//  HANDLERS — S2 BOOKS
+// ════════════════════════════════════════════════════
+function addBook(){
+  const part=document.getElementById('bPart').value;
+  const title=document.getElementById('bTitle').value.trim();
+  const author=document.getElementById('bAuthor').value.trim();
+  const country=document.getElementById('bCountry').value.trim();
+  const just=document.getElementById('bJust').value.trim();
+  if(!part||!title||!author){alert('Completa: participante, título y autor.');return;}
+  S.books.push({participant:part,title,author,country,justification:just});render();
+}
+function removeBook(i){S.books.splice(i,1);render();}
+
+// ════════════════════════════════════════════════════
+//  HANDLERS — CLASSIC VOTING
+// ════════════════════════════════════════════════════
+function startClassicVoting(){S.votingMode='classic';S.bookVotes={};S.bookVoterIdx=0;S.tiedBooks=null;go('s2vote');}
+function selectBook(voter,bi){S.bookVotes[voter]=bi;render();}
+function nextBookVoter(){
+  if(S.bookVoterIdx<S.participants.length-1){S.bookVoterIdx++;go('s2vote');}
+  else{resolveClassicVote();}
+}
+function resolveClassicVote(){
+  // tally
+  const pool = S.tiedBooks !== null ? S.tiedBooks : S.books.map((_,i)=>i);
+  const sc={};pool.forEach(i=>sc[i]=0);
+  Object.values(S.bookVotes).forEach(i=>{if(sc[i]!==undefined)sc[i]++;});
+  const sorted=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxPts=sorted[0][1];
+  const tied=sorted.filter(([,v])=>v===maxPts).map(([k])=>parseInt(k));
+  if(tied.length===1){
+    S.winnerBookIdx=tied[0];go('s2results');
+  } else {
+    // tie
+    S.tiedBooks=tied;S.bookVotes={};S.bookVoterIdx=0;go('s2tie');
+  }
+}
+function startTieBreaker(){S.bookVoterIdx=0;S.bookVotes={};go('s2vote');}
+
+// ════════════════════════════════════════════════════
+//  HANDLERS — MEMORY GAME
+// ════════════════════════════════════════════════════
+function startMemoryGame(){
+  S.votingMode='memory';
+  S.memMoves=0;
+  S.memFlipped=[];
+  S.memLocked=false;
+  S.memSurvivors=S.books.map((_,i)=>i);
+
+  // Build cards: 1 card per book + decoys to make a nice grid
+  const n=S.books.length;
+  // choose total cards: next nice grid size >= n+2 (at least 2 decoys)
+  const minCards=Math.max(n+2,6);
+  const cols=Math.ceil(Math.sqrt(minCards));
+  const totalCards=cols*cols;
+  const decoys=totalCards-n;
+
+  // Create and shuffle
+  let arr=[];
+  S.books.forEach((_,i)=>arr.push({type:'book',bookIdx:i,flipped:false,matched:false,eliminated:false}));
+  for(let i=0;i<decoys;i++) arr.push({type:'decoy',bookIdx:null,flipped:false,matched:false,eliminated:false});
+  // shuffle
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  S.memCards=arr;
+  go('s2memory');
+}
+
+function flipCard(idx){
+  const c=S.memCards[idx];
+  if(S.memLocked||c.flipped||c.matched||c.eliminated) return;
+  c.flipped=true;
+  S.memFlipped.push(idx);
+
+  if(S.memFlipped.length===2){
+    S.memLocked=true;
+    S.memMoves++;
+    setTimeout(()=>resolveFlip(),900);
+  } else {
+    S.memMoves++;
+  }
+  render();
+}
+
+function resolveFlip(){
+  const [a,b]=S.memFlipped;
+  const ca=S.memCards[a], cb=S.memCards[b];
+  // if both are books: eliminate both
+  if(ca.type==='book'&&cb.type==='book'){
+    ca.eliminated=true; cb.eliminated=true;
+    S.memSurvivors=S.memSurvivors.filter(i=>i!==ca.bookIdx&&i!==cb.bookIdx);
+  } else if(ca.type==='book'||cb.type==='book'){
+    // one book + one decoy: eliminate the book
+    const bookCard=ca.type==='book'?ca:cb;
+    bookCard.eliminated=true;
+    S.memSurvivors=S.memSurvivors.filter(i=>i!==bookCard.bookIdx);
+    // flip decoy back
+    const decoyCard=ca.type==='decoy'?ca:cb;
+    decoyCard.flipped=false;
+  } else {
+    // both decoys: flip both back
+    ca.flipped=false; cb.flipped=false;
+  }
+  S.memFlipped=[];
+  S.memLocked=false;
+
+  // check win
+  if(S.memSurvivors.length<=1){
+    if(S.memSurvivors.length===1) S.winnerBookIdx=S.memSurvivors[0];
+    else {
+      // all eliminated — last eliminated wins
+      const lastElim=S.memCards.filter(c=>c.type==='book'&&c.eliminated).pop();
+      S.winnerBookIdx=lastElim?lastElim.bookIdx:0;
+    }
+  }
+  render();
+}
+
+function finishMemory(){go('s2results');}
+
+// ════════════════════════════════════════════════════
+//  UTIL
+// ════════════════════════════════════════════════════
+function go(step){S.step=step;render();window.scrollTo({top:0,behavior:'smooth'});}
+function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+function resetAll(){
+  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],pairRounds:[],pairCurrentRound:0});
+  render();
+}
+
+// ════════════════════════════════════════════════════
+//  CONFETTI
+// ════════════════════════════════════════════════════
+function confetti(){
+  const canvas=document.getElementById('confetti');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const colors=['#2A9D8F','#C9A84C','#52B788','#4ECDC4','#E8C97E','#74C69D'];
+  const pieces=Array.from({length:90},()=>({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,w:Math.random()*8+4,h:Math.random()*14+6,color:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360,rs:(Math.random()-.5)*6,sp:Math.random()*3+2,dr:(Math.random()-.5)*1.5}));
+  let f=0;
+  (function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pieces.forEach(p=>{ctx.save();ctx.translate(p.x+p.w/2,p.y+p.h/2);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.globalAlpha=.85;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();p.y+=p.sp;p.x+=p.dr;p.rot+=p.rs;});if(++f<200)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);})();
+}
+
+render();
+</script>
+</body>
+</html>
