@@ -146,29 +146,36 @@ select{cursor:pointer;}
 .mode-desc{font-size:.75rem;color:var(--text-light);line-height:1.35;}
 
 /* ─── MEMORY GAME ─── */
-.memory-header{text-align:center;margin-bottom:1.2rem;}
-.memory-header p{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-light);font-style:italic;}
-.mem-stats{display:flex;justify-content:center;gap:1.5rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.mem-stats{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem;flex-wrap:wrap;}
 .mem-stat{text-align:center;}
-.mem-stat .val{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--teal-dark);font-weight:700;}
-.mem-stat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);}
-.mem-grid{display:grid;gap:.55rem;margin-bottom:1.2rem;}
-/* grid cols set inline by JS */
-.mem-card{aspect-ratio:2/3;border-radius:14px;cursor:pointer;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);user-select:none;}
-.mem-card.flipped{transform:rotateY(180deg);}
-.mem-card.matched{transform:rotateY(180deg);cursor:default;}
-.mem-card.matched .mem-back{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.3);}
-.mem-card.eliminated .mem-back{border-color:#e07070;box-shadow:0 0 0 3px rgba(224,112,112,.25);opacity:.7;}
-.mem-front,.mem-back{position:absolute;inset:0;border-radius:14px;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:.5rem;}
-.mem-front{background:linear-gradient(135deg,var(--teal-dark),var(--teal));border:2px solid var(--teal-light);}
-.mem-front-inner{font-size:1.6rem;opacity:.6;}
-.mem-back{background:white;border:2px solid var(--cream-dark);flex-direction:column;gap:.3rem;}
-.mem-book-title{font-family:'Playfair Display',serif;font-size:.68rem;color:var(--teal-dark);font-style:italic;text-align:center;line-height:1.2;}
-.mem-book-author{font-size:.6rem;color:var(--text-light);text-align:center;}
-.mem-book-prop{font-size:.58rem;background:rgba(42,157,143,.1);color:var(--teal-dark);padding:.12rem .45rem;border-radius:50px;text-align:center;}
-/* decoy cards */
-.mem-back.decoy{background:linear-gradient(135deg,rgba(42,157,143,.06),rgba(201,168,76,.06));border-color:var(--cream-dark);}
-.mem-decoy-icon{font-size:1.2rem;opacity:.45;}
+.mem-stat .val{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--teal-dark);font-weight:700;}
+.mem-stat .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);}
+.mem-turn-bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,rgba(42,157,143,.07),rgba(201,168,76,.04));border:1px solid rgba(42,157,143,.18);border-radius:14px;padding:.75rem 1.2rem;margin-bottom:1rem;}
+.mem-turn-name{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--teal-dark);}
+.mem-turn-badge{font-size:.75rem;color:var(--text-light);}
+.mem-grid{display:grid;gap:5px;margin-bottom:1rem;}
+.mem-card{aspect-ratio:3/4;cursor:pointer;position:relative;perspective:700px;user-select:none;}
+.mem-card-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.mem-card.face-up .mem-card-inner,.mem-card.revealed .mem-card-inner,.mem-card.elim .mem-card-inner{transform:rotateY(180deg);}
+.mem-front,.mem-back{position:absolute;inset:0;border-radius:9px;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;}
+.mem-front{transform:rotateY(0deg);}
+.mem-back{transform:rotateY(180deg);background:white;border:2px solid var(--cream-dark);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:5px;}
+.mem-card.saved .mem-back{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.35);}
+.mem-card.elim .mem-back{border-color:#e07070;background:#fff8f8;position:relative;}
+.mem-back-title{font-family:'Playfair Display',serif;font-size:.6rem;color:var(--teal-dark);font-style:italic;text-align:center;line-height:1.2;}
+.mem-back-by{font-size:.54rem;color:var(--text-light);text-align:center;}
+.mem-back-tag{font-size:.5rem;background:rgba(42,157,143,.1);color:var(--teal-dark);padding:.1rem .35rem;border-radius:50px;}
+.mem-back.is-decoy{background:linear-gradient(135deg,rgba(82,183,136,.08),rgba(42,157,143,.06));border-color:rgba(42,157,143,.2);justify-content:center;align-items:center;}
+.mem-result-pop{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.mem-result-inner{background:white;border-radius:24px;padding:2rem 2.2rem;text-align:center;max-width:360px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:popUp .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popUp{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.mem-result-inner .pop-big{font-size:3.2rem;margin-bottom:.5rem;}
+.mem-result-inner h3{font-family:'Playfair Display',serif;font-size:1.35rem;color:var(--teal-dark);margin-bottom:.3rem;}
+.mem-result-inner .pop-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-light);font-size:1rem;margin-bottom:.8rem;}
+.mem-result-inner .pop-book{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--gold-dark);font-style:italic;margin:.4rem 0 .2rem;}
+.mem-result-inner .pop-author{font-size:.82rem;color:var(--text-light);}
+.mem-result-inner .pop-proposer{display:inline-block;margin-top:.5rem;background:rgba(42,157,143,.1);border-radius:50px;padding:.2rem .75rem;font-size:.78rem;color:var(--teal-dark);}
 
 /* PAIRS MODE (tic-tac-toe feel) */
 .bracket-wrap{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.2rem;}
@@ -257,11 +264,15 @@ const S = {
   bookVoterIdx: 0,
   tiedBooks: null,           // array of book indices in tie
   // memory game
-  memCards: [],              // {id, type:'book'|'decoy', bookIdx, flipped, matched, eliminated}
-  memFlipped: [],            // indices of currently face-up (not yet matched)
+  memCards: [],
+  memFlipped: [],
   memLocked: false,
   memMoves: 0,
-  memSurvivors: [],          // book indices still in game
+  memSurvivors: [],
+  memVoterIdx: 0,
+  memPopup: null,
+  memBoardSize: 24,  // 24, 40 or 48
+  memBoardCols: 6,   // columns for grid
   // roulette game
   roulAlive: [],        // book indices still in play
   roulElim: [],         // eliminated book indices
@@ -300,9 +311,6 @@ const views = {
   s2results:   vS2Results,
 };
 
-function _routeRender() {
-  document.getElementById('root').innerHTML = (views[S.step] || vLanding)();
-}
 
 // ════════════════════════════════════════════════════
 //  LANDING
@@ -724,10 +732,19 @@ function vS2Mode() {
         <div class="mode-title">Ruleta de la suerte</div>
         <div class="mode-desc">Cada turno gira la ruleta. El libro que caiga se elimina — con comodines sorpresa. ¡El último sobrevive!</div>
       </div>
-      <div class="mode-btn" onclick="startMemoryGame()" style="grid-column:span 2">
+      <div class="mode-btn" style="grid-column:span 2">
         <div class="mode-emoji">🃏</div>
         <div class="mode-title">Memory literario</div>
-        <div class="mode-desc">Los libros se esconden en un tablero. El último que quede sin descubrir… ¡gana!</div>
+        <div class="mode-desc">Encuentra pares de números — los libros están escondidos. ¡El último sin descubrir gana!</div>
+        <div style="display:flex;gap:.5rem;justify-content:center;margin-top:.9rem;flex-wrap:wrap">
+          <span style="font-size:.72rem;color:var(--text-light);align-self:center">Tablero:</span>
+          ${[[24,4,6],[40,5,8],[48,6,8]].map(([sz,rows,cols])=>{
+            const active=S.memBoardSize===sz;
+            return `<button onclick="event.stopPropagation();S.memBoardSize=${sz};S.memBoardCols=${cols};render()"
+              style="padding:.35rem .85rem;border-radius:8px;border:2px solid ${active?'var(--teal)':'var(--cream-dark)'};background:${active?'var(--teal)':'white'};color:${active?'white':'var(--text-light)'};font-family:Jost,sans-serif;font-size:.82rem;cursor:pointer">${rows}×${cols}</button>`;
+          }).join('')}
+        </div>
+        <button class="btn btn-g" style="margin-top:.8rem;width:100%" onclick="startMemoryGame()">Jugar Memory →</button>
       </div>
     </div>
     <div style="display:flex;justify-content:flex-start">
@@ -793,69 +810,126 @@ function vS2Tie() {
 //  S2 — MEMORY GAME
 // ════════════════════════════════════════════════════
 function vS2Memory() {
-  const cards = S.memCards;
-  const total = cards.length;
-  const survivors = S.memSurvivors.length;
-  const eliminated = S.books.length - survivors;
-  // figure out cols
-  const cols = Math.ceil(Math.sqrt(total));
-  return `<div class="card">
-    <div class="card-title">🃏 Memory Literario</div>
-    <div class="card-sub">Encuentra los libros — el último en ser descubierto gana</div>
-    <div class="info-box">
-      Voltea fichas para encontrar los libros. Cada libro que descubras queda <strong>eliminado</strong>.
-      Las fichas que se queden boca abajo son cartas vacías (señuelos). El libro que <em>nadie encuentre</em> al final es el ganador.
-    </div>
+  const nBooks = S.books.length;
+  const total  = S.memBoardSize;
+  const cols   = S.memBoardCols || 6;
+  const alive  = S.memSurvivors.length;
+  const elim   = nBooks - alive;
+  const voter  = S.participants[S.memVoterIdx % S.participants.length];
+
+  // Book cover colors (one per book slot)
+  const COVERS = ['#2A9D8F','#C9A84C','#52B788','#4ECDC4','#D4845A','#74C69D','#6B4F9E','#1B6B63','#9A7A2E','#E07070'];
+
+  return `<div class="card" style="padding:1.4rem 1.2rem">
+    <div class="card-title" style="margin-bottom:.1rem">🃏 Memory Literario</div>
+    <div class="card-sub" style="margin-bottom:.8rem">Encuentra pares de números · los libros escondidos se eliminan al descubrirse</div>
+
     <div class="mem-stats">
-      <div class="mem-stat"><div class="val">${S.memMoves}</div><div class="lbl">Movimientos</div></div>
-      <div class="mem-stat"><div class="val">${survivors}</div><div class="lbl">Libros vivos</div></div>
-      <div class="mem-stat"><div class="val">${eliminated}</div><div class="lbl">Eliminados</div></div>
+      <div class="mem-stat"><div class="val">${S.memMoves}</div><div class="lbl">Turnos</div></div>
+      <div class="mem-stat"><div class="val">${alive}</div><div class="lbl">Libros vivos</div></div>
+      <div class="mem-stat"><div class="val">${elim}</div><div class="lbl">Eliminados</div></div>
     </div>
+
+    <div class="mem-turn-bar">
+      <div>
+        <div style="font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin-bottom:.1rem">Turno de</div>
+        <div class="mem-turn-name">${voter}</div>
+      </div>
+      <span class="mem-turn-badge">Voltea 2 cartas</span>
+    </div>
+
     <div class="mem-grid" style="grid-template-columns:repeat(${cols},1fr)">
-      ${cards.map((c,i)=>{
-        let cls='mem-card';
-        if(c.flipped||c.matched||c.eliminated) cls+=' flipped';
-        if(c.matched) cls+=' matched';
-        if(c.eliminated) cls+=' eliminated';
-        const book = c.type==='book' ? S.books[c.bookIdx] : null;
-        const backContent = c.type==='book'
-          ? `<div class="mem-book-title">${book.title}</div><div class="mem-book-author">${book.author}</div><div class="mem-book-prop">${book.participant}</div>`
-          : `<div class="mem-back decoy"><div class="mem-decoy-icon">📄</div></div>`;
-        const clickable = !c.flipped && !c.matched && !c.eliminated && !S.memLocked;
-        return `<div class="${cls}" ${clickable?`onclick="flipCard(${i})"`:'style="cursor:default"'}>
-          <div class="mem-front"><div class="mem-front-inner">📚</div></div>
-          <div class="mem-back ${c.type==='decoy'?'decoy':''}">${c.type==='book'?`<div class="mem-book-title">${book.title}</div><div class="mem-book-author">${book.author}</div><div class="mem-book-prop">${book.participant}</div>`:`<div class="mem-decoy-icon">📄</div>`}</div>
+      ${S.memCards.map((c,i) => {
+        const isUp = c.faceUp || c.tempUp;
+        const clickable = !S.memLocked && !c.faceUp && !c.elim && !c.tempUp && !S.memPopup;
+
+        // Back face (closed) — uniform dark teal book design
+        const frontHTML = `<div class="mem-front">
+          <div style="text-align:center">
+            <div style="font-size:.9rem;opacity:.5">📖</div>
+            <div style="width:22px;height:2px;background:rgba(255,255,255,.35);margin:3px auto 2px"></div>
+            <div style="width:16px;height:2px;background:rgba(255,255,255,.25);margin:0 auto 2px"></div>
+            <div style="width:19px;height:2px;background:rgba(255,255,255,.25);margin:0 auto"></div>
+          </div>
+        </div>`;
+
+        // Open face depends on type
+        let backHTML;
+        if (c.type === 'book') {
+          const b = S.books[c.bookIdx];
+          const col = COVERS[c.bookIdx % COVERS.length];
+          backHTML = `<div class="mem-back" style="border-color:${col}44;background:${col}11">
+            <div style="font-size:.75rem;margin-bottom:1px">${c.elim ? '💀' : '📖'}</div>
+            <div class="mem-back-title" style="color:${col}">${b.title}</div>
+            <div class="mem-back-by">${b.author}</div>
+            ${b.country ? `<div class="mem-back-by">${b.country}</div>` : ''}
+            <div class="mem-back-tag" style="background:${col}22;color:${col}">${b.participant}</div>
+          </div>`;
+        } else {
+          // Numbered decoy
+          const num = c.pairNum;
+          const pairColor = `hsl(${(num * 47) % 360},45%,55%)`;
+          backHTML = `<div class="mem-back ${c.faceUp?'mem-pair-found':''}" style="${c.faceUp?`border-color:${pairColor};background:${pairColor}18`:''}">
+            <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:${pairColor};line-height:1">${num}</div>
+            ${c.faceUp ? `<div style="font-size:.5rem;color:${pairColor};opacity:.7">✓ PAR</div>` : ''}
+          </div>`;
+        }
+
+        const cardCls = ['mem-card', c.elim?'elim':'', (c.faceUp||c.tempUp)?'face-up':''].filter(Boolean).join(' ');
+        return `<div class="${cardCls}" ${clickable?`onclick="memFlip(${i})"`:'style="cursor:default"'}>
+          <div class="mem-card-inner">${frontHTML}${backHTML}</div>
         </div>`;
       }).join('')}
     </div>
-    ${memIsOver() ? renderMemResult() : `
-    <div style="text-align:center;margin-top:.5rem">
-      <span style="font-size:.8rem;color:var(--text-light);font-style:italic">Voltea las fichas para encontrar libros · ${S.memSurvivors.length} libro${S.memSurvivors.length!==1?'s':''} por descubrir</span>
-    </div>`}
+
+    <div style="text-align:center;font-size:.76rem;color:var(--text-light);font-style:italic;margin-top:.3rem">
+      ${alive} libro${alive!==1?'s':''} en juego · ${Math.floor(S.memBoardSize/2) - nBooks} pares de números
+    </div>
+
+    ${S.memPopup ? renderMemPopup(S.memPopup) : ''}
   </div>`;
 }
 
-function renderMemResult() {
-  if (S.memSurvivors.length === 0) {
-    // everyone found — last found is winner (last eliminated)
-    return `<div class="divider"></div><div style="text-align:center"><button class="btn btn-g" onclick="go('s2results')">Ver ganador →</button></div>`;
+function renderMemPopup(p) {
+  if (p.type === 'two-books') {
+    const bA = S.books[S.memCards[p.cardA].bookIdx];
+    const bB = S.books[S.memCards[p.cardB].bookIdx];
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">📚📚</div>
+      <h3>¡Dos libros!</h3>
+      <div class="pop-sub">Uno se salva y vuelve boca abajo.<br>El otro queda eliminado. ¿Cuál salvas?</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem;margin:.9rem 0">
+        <button class="btn btn-p" onclick="memSaveChoice(${p.cardA},${p.cardB})">🛡️ Salvar: <em>${bA.title}</em></button>
+        <button class="btn btn-p" onclick="memSaveChoice(${p.cardB},${p.cardA})">🛡️ Salvar: <em>${bB.title}</em></button>
+      </div>
+    </div></div>`;
   }
-  if (S.memSurvivors.length === 1) {
-    return `<div class="divider"></div>
-    <div class="win-box" style="margin-bottom:0">
-      <div class="big">🏆</div>
-      <h2>¡Libro superviviente!</h2>
-      <div class="wtitle">"${S.books[S.memSurvivors[0]].title}"</div>
-      <p>de ${S.books[S.memSurvivors[0]].author} — nadie lo encontró</p>
-    </div>
-    <div class="divider"></div>
-    <div style="display:flex;justify-content:flex-end"><button class="btn btn-g" onclick="finishMemory()">¡Es el ganador! →</button></div>`;
+  if (p.type === 'book-elim') {
+    const book = S.books[p.bookIdx];
+    const remaining = S.memSurvivors.length;
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">💀</div>
+      <h3>¡Libro eliminado!</h3>
+      <div class="pop-book">"${book.title}"</div>
+      <div class="pop-author">de ${book.author}</div>
+      <div class="pop-proposer">Propuesto por ${book.participant}</div>
+      <div class="pop-sub" style="margin-top:.6rem">${remaining} libro${remaining!==1?'s':''} restante${remaining!==1?'s':''}</div>
+      <button class="btn btn-g" style="margin-top:.8rem" onclick="memDismiss()">Continuar →</button>
+    </div></div>`;
+  }
+  if (p.type === 'winner') {
+    const book = S.books[p.bookIdx];
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">🏆</div>
+      <h3>¡Libro superviviente!</h3>
+      <div class="pop-book">"${book.title}"</div>
+      <div class="pop-author">de ${book.author}</div>
+      <div class="pop-proposer">Propuesto por ${book.participant}</div>
+      <div class="pop-sub" style="margin-top:.5rem">¡Nadie lo encontró — es el ganador!</div>
+      <button class="btn btn-g" style="margin-top:.9rem" onclick="finishMemory()">¡Es el libro del mes! 🎉</button>
+    </div></div>`;
   }
   return '';
-}
-
-function memIsOver() {
-  return S.memSurvivors.length <= 1 || S.memCards.filter(c=>c.type==='book'&&!c.eliminated).length === 0;
 }
 
 // ════════════════════════════════════════════════════
@@ -864,115 +938,103 @@ function memIsOver() {
 function vS2Roulette() {
   const alive = S.roulAlive;
   const spinner = S.participants[S.roulSpinnerIdx % S.participants.length];
-  const result = S.roulResult;
-  const canSpin = !S.roulSpinning && !result;
 
-  // If only 1 book left → winner!
-  if (alive.length === 1) {
+  if (alive.length === 1 && !S.roulResult) {
     S.winnerBookIdx = alive[0];
     S.votingMode = 'roulette';
-    setTimeout(() => go('s2results'), 800);
+    setTimeout(() => go('s2results'), 600);
   }
 
   return `<div class="card">
     <div class="card-title">🎡 Ruleta de la suerte</div>
-    <div class="card-sub">El libro que caiga… ¡se va! El último sobreviviente gana</div>
+    <div class="card-sub">El libro que caiga se elimina · el último sobreviviente gana</div>
 
     <div class="roulette-wrap">
-
-      <!-- Turno -->
       <div class="roulette-turn">
-        <div class="turn-label">🎲 Le toca girar a</div>
+        <div class="turn-label">🎲 Turno de</div>
         <div class="turn-name">${spinner}</div>
       </div>
 
-      <!-- Canvas ruleta -->
       <div class="roulette-canvas-wrap">
         <div class="roulette-pointer"></div>
-        <canvas id="roulCanvas" width="320" height="320"></canvas>
+        <canvas id="roulCanvas" width="300" height="300"></canvas>
       </div>
 
-      <!-- Botón girar -->
-      ${!result ? `<button class="roulette-spin-btn" id="spinBtn" onclick="spinRoulette()" ${S.roulSpinning?'disabled':''}>
-        ${S.roulSpinning ? '✦ Girando…' : '¡Girar! 🎡'}
-      </button>` : ''}
+      ${!S.roulResult
+        ? `<button class="roulette-spin-btn" onclick="spinRoulette()" ${S.roulSpinning?'disabled':''}>
+            ${S.roulSpinning ? '✦ Girando…' : '¡Girar la ruleta! 🎡'}
+           </button>`
+        : ''}
 
-      <!-- Resultado -->
-      ${result ? renderRouletteResult(result) : ''}
-
-      <!-- Libros vivos / eliminados -->
-      <div style="width:100%;max-width:380px">
-        <div style="font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);margin-bottom:.5rem;text-align:center">
+      <!-- Lista de libros -->
+      <div style="width:100%;max-width:420px">
+        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-light);text-align:center;margin-bottom:.5rem">
           ${alive.length} libro${alive.length!==1?'s':''} en juego
         </div>
         <div class="roulette-alive">
           ${S.books.map((b,i) => {
             const isAlive = alive.includes(i);
-            return `<span class="roulette-alive-tag ${isAlive?'':'dead'}">
-              ${isAlive?'📖':'💀'} ${b.title}
+            const saved = S.roulSavedIdx === i;
+            return `<span class="roulette-alive-tag ${isAlive?'':'dead'}" ${saved?'style="border-color:var(--gold);background:rgba(201,168,76,.12)"':''}>
+              ${!isAlive ? '💀' : saved ? '🛡️' : 'L'+(i+1)} ${b.participant}
             </span>`;
           }).join('')}
         </div>
       </div>
-
     </div>
+
+    ${S.roulReveal ? renderRouletteReveal(S.roulReveal) : ''}
   </div>`;
 }
 
-function renderRouletteResult(result) {
-  if (result.type === 'joker') {
-    const joker = result.jokerType;
-    if (joker === 'protected') {
-      const book = S.books[result.bookIdx];
-      return `<div class="roulette-result-pop joker">
-        <div class="res-emoji">🛡️</div>
-        <div class="res-title">¡Libro protegido!</div>
-        <div class="res-book">"${book.title}"</div>
-        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">Estaba salvado — se libra de la eliminación esta ronda</p>
-        <div class="joker-choices" style="margin-top:.8rem">
-          <button class="joker-btn" onclick="applyJokerAgain()">Girar de nuevo ↺</button>
-        </div>
-      </div>`;
-    }
-    if (joker === 'again') {
-      return `<div class="roulette-result-pop joker">
-        <div class="res-emoji">🃏</div>
-        <div class="res-title">¡Comodín! Gira de nuevo</div>
-        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">La suerte te sonríe — vuelves a girar sin eliminar nada</p>
-        <div class="joker-choices" style="margin-top:.8rem">
-          <button class="joker-btn" onclick="applyJokerAgain()">Girar de nuevo ↺</button>
-        </div>
-      </div>`;
-    }
-    if (joker === 'save') {
-      // show list of alive books to save one
-      return `<div class="roulette-result-pop joker">
-        <div class="res-emoji">🛡️</div>
-        <div class="res-title">¡Comodín! Salva un libro</div>
-        <p style="font-size:.83rem;color:var(--text-light);margin-top:.3rem">Elige un libro para protegerlo de la próxima eliminación</p>
-        <div class="joker-choices" style="flex-direction:column;align-items:center;margin-top:.8rem">
-          ${S.roulAlive.map(bi => `
-            <button class="joker-btn ${S.roulSavedIdx===bi?'active-save':''}"
-              style="${S.roulSavedIdx===bi?'background:var(--teal);color:white;border-color:var(--teal);':''}"
-              onclick="saveBook(${bi})">
-              📖 ${S.books[bi].title}
-            </button>`).join('')}
-          ${S.roulSavedIdx!==null?`<button class="joker-btn" style="margin-top:.4rem;background:var(--gold);color:white;border-color:var(--gold)" onclick="confirmSave()">Confirmar protección ✓</button>`:''}
-        </div>
-      </div>`;
-    }
+function renderRouletteReveal(r) {
+  if (r.type === 'joker-again') {
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">🃏</div>
+      <h3>¡Comodín!</h3>
+      <div class="pop-sub">Giras de nuevo sin eliminar nada</div>
+      <button class="btn btn-g" style="margin-top:.7rem" onclick="roulJokerAgain()">Girar de nuevo ↺</button>
+    </div></div>`;
   }
-  // Normal elimination
-  const book = S.books[result.bookIdx];
-  return `<div class="roulette-result-pop">
-    <div class="res-emoji">💀</div>
-    <div class="res-title">Libro eliminado</div>
-    <div class="res-book">"${book.title}"</div>
-    <p style="font-size:.8rem;color:var(--text-light);margin-top:.3rem">de ${book.author} · propuesto por ${book.participant}</p>
-    <div class="joker-choices" style="margin-top:.9rem">
-      <button class="joker-btn" onclick="confirmElimination()">Continuar →</button>
+  if (r.type === 'joker-save') {
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">🛡️</div>
+      <h3>¡Comodín!</h3>
+      <div class="pop-sub">Elige un libro para protegerlo de la próxima eliminación</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0">
+        ${S.roulAlive.map(bi => `
+          <button class="btn ${S.roulSavedIdx===bi?'btn-g':'btn-o'}" style="font-size:.85rem" onclick="roulSaveBook(${bi})">
+            ${S.roulSavedIdx===bi?'🛡️ ':'📖 '} L${bi+1} · ${S.books[bi].title} <small>(${S.books[bi].participant})</small>
+          </button>`).join('')}
+      </div>
+      ${S.roulSavedIdx!==null
+        ? `<button class="btn btn-g" onclick="roulConfirmSave()">Confirmar protección ✓</button>`
+        : ''}
+    </div></div>`;
+  }
+  if (r.type === 'protected') {
+    const book = S.books[r.bookIdx];
+    return `<div class="mem-result-pop"><div class="mem-result-inner">
+      <div class="pop-big">🛡️</div>
+      <h3>¡Libro protegido!</h3>
+      <div class="pop-book">"${book.title}"</div>
+      <div class="pop-author">de ${book.author} · ${book.participant}</div>
+      <div class="pop-sub" style="margin-top:.5rem">Estaba protegido — se libra esta ronda</div>
+      <button class="btn btn-g" style="margin-top:.8rem" onclick="roulJokerAgain()">Girar de nuevo ↺</button>
+    </div></div>`;
+  }
+  // elimination — dramatic reveal
+  const book = S.books[r.bookIdx];
+  return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #e07070">
+    <div class="pop-big" style="animation:popUp .4s cubic-bezier(.34,1.56,.64,1)">💀</div>
+    <h3 style="color:#c0736b">¡Eliminado!</h3>
+    <div class="pop-book" style="font-size:1.2rem;color:var(--teal-dark);margin:.6rem 0 .2rem">"${book.title}"</div>
+    <div class="pop-author">de ${book.author}</div>
+    <div class="pop-proposer" style="display:inline-block;margin:.4rem 0;background:rgba(224,112,112,.1);border-radius:50px;padding:.2rem .75rem;font-size:.78rem;color:#c0736b">Propuesto por ${book.participant}</div>
+    <div style="margin-top:.8rem">
+      <button class="btn btn-g" onclick="roulConfirmElim()">Continuar →</button>
     </div>
-  </div>`;
+  </div></div>`;
 }
 
 // ════════════════════════════════════════════════════
@@ -1165,82 +1227,140 @@ function startTieBreaker(){S.bookVoterIdx=0;S.bookVotes={};go('s2vote');}
 // ════════════════════════════════════════════════════
 //  HANDLERS — MEMORY GAME
 // ════════════════════════════════════════════════════
-function startMemoryGame(){
-  S.votingMode='memory';
-  S.memMoves=0;
-  S.memFlipped=[];
-  S.memLocked=false;
-  S.memSurvivors=S.books.map((_,i)=>i);
+function startMemoryGame() {
+  S.votingMode = 'memory';
+  S.memMoves = 0;
+  S.memLocked = false;
+  S.memSurvivors = S.books.map((_,i) => i);
+  S.memVoterIdx = 0;
+  S.memFlipped = [];
+  S.memPopup = null;
 
-  // Build cards: 1 card per book + decoys to make a nice grid
-  const n=S.books.length;
-  // choose total cards: next nice grid size >= n+2 (at least 2 decoys)
-  const minCards=Math.max(n+2,6);
-  const cols=Math.ceil(Math.sqrt(minCards));
-  const totalCards=cols*cols;
-  const decoys=totalCards-n;
+  const nBooks = S.books.length;
+  const total  = S.memBoardSize || 24;
+  const nPairs = total / 2;          // half the board = pairs of numbers
+  const nDecoyPairs = nPairs - nBooks; // remaining pairs filled with numbered decoys
 
-  // Create and shuffle
-  let arr=[];
-  S.books.forEach((_,i)=>arr.push({type:'book',bookIdx:i,flipped:false,matched:false,eliminated:false}));
-  for(let i=0;i<decoys;i++) arr.push({type:'decoy',bookIdx:null,flipped:false,matched:false,eliminated:false});
-  // shuffle
-  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
-  S.memCards=arr;
+  // Build card array: 1 card per book + 2 cards per numbered decoy pair
+  let arr = [];
+  // Books (1 card each — unique, no pair)
+  S.books.forEach((_,i) => arr.push({type:'book', bookIdx:i, pairNum:null, faceUp:false, tempUp:false, elim:false}));
+  // Numbered decoys (2 cards each with same number)
+  for (let n = 1; n <= nDecoyPairs; n++) {
+    arr.push({type:'decoy', bookIdx:null, pairNum:n, faceUp:false, tempUp:false, elim:false});
+    arr.push({type:'decoy', bookIdx:null, pairNum:n, faceUp:false, tempUp:false, elim:false});
+  }
+  // If total is odd due to odd nBooks, add one extra decoy card (visual filler, unmatched)
+  while (arr.length < total) {
+    arr.push({type:'decoy', bookIdx:null, pairNum:nDecoyPairs+1, faceUp:false, tempUp:false, elim:false});
+  }
+
+  // Shuffle
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  S.memCards = arr;
   go('s2memory');
 }
 
-function flipCard(idx){
-  const c=S.memCards[idx];
-  if(S.memLocked||c.flipped||c.matched||c.eliminated) return;
-  c.flipped=true;
+function memFlip(idx) {
+  const c = S.memCards[idx];
+  if (S.memLocked || c.faceUp || c.tempUp || c.elim || S.memPopup) return;
+  if (S.memFlipped.length >= 2) return;
+  c.tempUp = true;
   S.memFlipped.push(idx);
-
-  if(S.memFlipped.length===2){
-    S.memLocked=true;
-    S.memMoves++;
-    setTimeout(()=>resolveFlip(),900);
-  } else {
-    S.memMoves++;
-  }
   render();
+  if (S.memFlipped.length === 2) {
+    S.memLocked = true;
+    S.memMoves++;
+    setTimeout(resolveMemFlip, 900);
+  }
 }
 
-function resolveFlip(){
-  const [a,b]=S.memFlipped;
-  const ca=S.memCards[a], cb=S.memCards[b];
-  // if both are books: eliminate both
-  if(ca.type==='book'&&cb.type==='book'){
-    ca.eliminated=true; cb.eliminated=true;
-    S.memSurvivors=S.memSurvivors.filter(i=>i!==ca.bookIdx&&i!==cb.bookIdx);
-  } else if(ca.type==='book'||cb.type==='book'){
-    // one book + one decoy: eliminate the book
-    const bookCard=ca.type==='book'?ca:cb;
-    bookCard.eliminated=true;
-    S.memSurvivors=S.memSurvivors.filter(i=>i!==bookCard.bookIdx);
-    // flip decoy back
-    const decoyCard=ca.type==='decoy'?ca:cb;
-    decoyCard.flipped=false;
-  } else {
-    // both decoys: flip both back
-    ca.flipped=false; cb.flipped=false;
-  }
-  S.memFlipped=[];
-  S.memLocked=false;
+function resolveMemFlip() {
+  const [iA, iB] = S.memFlipped;
+  const cA = S.memCards[iA], cB = S.memCards[iB];
 
-  // check win
-  if(S.memSurvivors.length<=1){
-    if(S.memSurvivors.length===1) S.winnerBookIdx=S.memSurvivors[0];
-    else {
-      // all eliminated — last eliminated wins
-      const lastElim=S.memCards.filter(c=>c.type==='book'&&c.eliminated).pop();
-      S.winnerBookIdx=lastElim?lastElim.bookIdx:0;
+  const bothDecoys  = cA.type==='decoy' && cB.type==='decoy';
+  const bothBooks   = cA.type==='book'  && cB.type==='book';
+  const bookDecoy   = (cA.type==='book') !== (cB.type==='book'); // XOR
+
+  if (bothDecoys) {
+    if (cA.pairNum === cB.pairNum) {
+      // ✅ Matching pair — keep face up permanently
+      cA.faceUp = true; cA.tempUp = false;
+      cB.faceUp = true; cB.tempUp = false;
+    } else {
+      // ❌ Different numbers — flip back
+      cA.tempUp = false; cB.tempUp = false;
     }
+    S.memFlipped = [];
+    S.memLocked = false;
+    S.memVoterIdx++;
+    render();
+
+  } else if (bookDecoy) {
+    // Book + number → book eliminated, number flips back
+    const bookCard   = cA.type==='book' ? cA : cB;
+    const decoyCard  = cA.type==='decoy'? cA : cB;
+    bookCard.elim    = true;
+    bookCard.faceUp  = true;
+    bookCard.tempUp  = false;
+    decoyCard.tempUp = false;
+    S.memSurvivors   = S.memSurvivors.filter(i => i !== bookCard.bookIdx);
+    S.memFlipped     = [];
+    S.memLocked      = false;
+    S.memPopup       = {type:'book-elim', bookIdx: bookCard.bookIdx};
+    render();
+
+  } else if (bothBooks) {
+    // Two books — player chooses which to save
+    S.memFlipped = [];
+    S.memLocked  = false;
+    S.memPopup   = {type:'two-books', cardA:iA, cardB:iB};
+    render();
+  }
+}
+
+function memSaveChoice(savedIdx, elimIdx) {
+  const saved = S.memCards[savedIdx];
+  const elim  = S.memCards[elimIdx];
+  // Eliminate one
+  elim.faceUp = true; elim.tempUp = false; elim.elim = true;
+  S.memSurvivors = S.memSurvivors.filter(i => i !== elim.bookIdx);
+  // Save the other — flip back boca abajo
+  saved.faceUp = false; saved.tempUp = false;
+  S.memPopup = null;
+  S.memVoterIdx++;
+  checkMemWinner();
+}
+
+function memDismiss() {
+  S.memPopup = null;
+  S.memVoterIdx++;
+  checkMemWinner();
+}
+
+function checkMemWinner() {
+  // Winner = last book whose card is still face-down (not elim, not faceUp)
+  const stillHidden = S.memSurvivors.filter(bi => {
+    const card = S.memCards.find(c => c.type==='book' && c.bookIdx===bi && !c.elim);
+    return card && !card.faceUp;
+  });
+  if (stillHidden.length === 1) {
+    S.winnerBookIdx = stillHidden[0];
+    S.memPopup = {type:'winner', bookIdx: stillHidden[0]};
+  } else if (S.memSurvivors.length <= 1) {
+    S.winnerBookIdx = S.memSurvivors[0] ?? 0;
+    S.memPopup = {type:'winner', bookIdx: S.winnerBookIdx};
   }
   render();
 }
 
 function finishMemory(){go('s2results');}
+
+
 
 // ════════════════════════════════════════════════════
 //  ROULETTE HANDLERS
@@ -1252,204 +1372,154 @@ function startRoulette() {
   S.roulSpinnerIdx = 0;
   S.roulSpinning = false;
   S.roulResult = null;
+  S.roulReveal = null;
   S.roulSavedIdx = null;
+  _roulAngle = 0;
   go('s2roulette');
-  setTimeout(drawRoulette, 50);
+  setTimeout(drawRoulette, 60);
 }
 
-// Palette for roulette slices
-const ROUL_COLORS = [
-  '#2A9D8F','#C9A84C','#52B788','#4ECDC4',
-  '#E8C97E','#74C69D','#1B6B63','#9A7A2E',
-];
-const ROUL_JOKER_COLOR = '#E07070';
+const ROUL_COLORS = ['#2A9D8F','#C9A84C','#52B788','#4ECDC4','#E8B86D','#74C69D','#1B6B63','#9A7A2E','#6B4F9E','#D4845A'];
+let _roulAngle = 0;
 
-let _roulAngle = 0;       // current rotation of wheel (radians)
-let _roulAnimId = null;
+function buildRoulSegments() {
+  const alive = S.roulAlive;
+  const n = alive.length;
+  const jokerEvery = 3;
+  const segs = [];
+  alive.forEach((bi, i) => {
+    segs.push({type:'book', bookIdx:bi, label:'L'+(bi+1)});
+    if ((i+1) % jokerEvery === 0 && segs.filter(s=>s.type==='joker').length < 2)
+      segs.push({type:'joker', label:'🃏'});
+  });
+  return segs;
+}
 
-function drawRoulette(targetAngle) {
+function drawRoulette(angle) {
   const canvas = document.getElementById('roulCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const cx = W/2, cy = H/2, r = W/2 - 6;
+  const cx = W/2, cy = H/2, r = W/2 - 5;
+  const a = angle !== undefined ? angle : _roulAngle;
+  _roulAngle = a;
 
-  // Build segments: alive books + joker slots
-  const alive = S.roulAlive;
-  const n = alive.length;
-  // Insert 1 joker every 3 books (max 2 jokers)
-  const jokerCount = Math.min(2, Math.floor(n / 3));
-  const segments = [];
-  alive.forEach((bi, i) => {
-    segments.push({ type: 'book', bookIdx: bi });
-    if (i < jokerCount) segments.push({ type: 'joker' });
-  });
-  const total = segments.length;
-  const sliceAngle = (2 * Math.PI) / total;
-  const angle = targetAngle !== undefined ? targetAngle : _roulAngle;
+  const segs = buildRoulSegments();
+  const n = segs.length;
+  const slice = (2*Math.PI) / n;
 
-  ctx.clearRect(0, 0, W, H);
+  ctx.clearRect(0,0,W,H);
 
-  segments.forEach((seg, i) => {
-    const start = angle + i * sliceAngle;
-    const end = start + sliceAngle;
-    // Slice
+  segs.forEach((seg,i) => {
+    const s = a + i*slice, e = s + slice;
     ctx.beginPath();
-    ctx.moveTo(cx, cy);
-    ctx.arc(cx, cy, r, start, end);
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,s,e);
     ctx.closePath();
-    if (seg.type === 'joker') {
-      ctx.fillStyle = ROUL_JOKER_COLOR;
-    } else {
-      ctx.fillStyle = ROUL_COLORS[alive.indexOf(seg.bookIdx) % ROUL_COLORS.length];
-    }
+    ctx.fillStyle = seg.type==='joker' ? '#E07070' : ROUL_COLORS[S.roulAlive.indexOf(seg.bookIdx) % ROUL_COLORS.length];
     ctx.fill();
-    ctx.strokeStyle = 'white';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
+    ctx.strokeStyle='white'; ctx.lineWidth=2.5; ctx.stroke();
 
     // Label
     ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(start + sliceAngle / 2);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = 'white';
-    ctx.font = `bold ${total > 8 ? 9 : 11}px Jost, sans-serif`;
-    const label = seg.type === 'joker'
-      ? '🃏 COMODÍN'
-      : truncate(S.books[seg.bookIdx].title, total > 6 ? 12 : 16);
-    ctx.fillText(label, r - 10, 4);
+    ctx.translate(cx,cy);
+    ctx.rotate(s + slice/2);
+    ctx.textAlign='right';
+    ctx.fillStyle='white';
+    ctx.font=`bold ${n>10?10:12}px Jost,sans-serif`;
+    ctx.fillText(seg.label, r-10, 4);
     ctx.restore();
   });
 
-  // Center circle
-  ctx.beginPath();
-  ctx.arc(cx, cy, 28, 0, 2*Math.PI);
-  ctx.fillStyle = 'white';
-  ctx.fill();
-  ctx.strokeStyle = '#C9A84C';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fillStyle = '#1B6B63';
-  ctx.font = 'bold 14px Playfair Display, serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('✦', cx, cy);
+  // Center
+  ctx.beginPath(); ctx.arc(cx,cy,24,0,2*Math.PI);
+  ctx.fillStyle='white'; ctx.fill();
+  ctx.strokeStyle='#C9A84C'; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='#1B6B63'; ctx.font='bold 13px serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('✦',cx,cy);
 
-  // Store segments for hit testing
-  canvas._segments = segments;
-  canvas._sliceAngle = sliceAngle;
-  canvas._total = total;
-  _roulAngle = angle;
-}
-
-function truncate(str, n) {
-  return str.length > n ? str.slice(0, n-1) + '…' : str;
+  canvas._segs = segs; canvas._slice = slice;
 }
 
 function spinRoulette() {
-  if (S.roulSpinning || S.roulResult) return;
-  S.roulSpinning = true;
-  render();
-
-  const canvas = document.getElementById('roulCanvas');
-  // Random spin: 5-10 full rotations + random extra
-  const extraAngle = Math.random() * 2 * Math.PI;
-  const totalRotation = (5 + Math.floor(Math.random() * 5)) * 2 * Math.PI + extraAngle;
-  const duration = 3500 + Math.random() * 1000;
-  const startAngle = _roulAngle;
-  const endAngle = startAngle + totalRotation;
-  const startTime = performance.now();
-
-  function easeOut(t) {
-    return 1 - Math.pow(1 - t, 4);
+  if (S.roulSpinning || S.roulReveal) return;
+  S.roulSpinning = true; render();
+  const rotations = (5 + Math.floor(Math.random()*5)) * 2*Math.PI + Math.random()*2*Math.PI;
+  const duration = 3200 + Math.random()*1200;
+  const start = _roulAngle, end = start + rotations;
+  const t0 = performance.now();
+  function ease(t){ return 1-Math.pow(1-t,4); }
+  function frame(now){
+    const t = Math.min((now-t0)/duration,1);
+    drawRoulette(start + rotations*ease(t));
+    if(t<1){ requestAnimationFrame(frame); }
+    else { S.roulSpinning=false; resolveRoulette(end); }
   }
-
-  function animate(now) {
-    const elapsed = now - startTime;
-    const t = Math.min(elapsed / duration, 1);
-    const currentAngle = startAngle + totalRotation * easeOut(t);
-    drawRoulette(currentAngle);
-    if (t < 1) {
-      _roulAnimId = requestAnimationFrame(animate);
-    } else {
-      // Determine which segment is at top (pointer at top = -PI/2 from center)
-      resolveRouletteResult(endAngle, canvas._segments, canvas._sliceAngle);
-    }
-  }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(frame);
 }
 
-function resolveRouletteResult(finalAngle, segments, sliceAngle) {
-  // Pointer is at top of wheel. In canvas coords, top = -PI/2.
-  // We need to find which segment is under the pointer.
-  // Normalize: pointer position relative to wheel rotation
-  const pointerAngle = -Math.PI / 2; // top
-  // Offset into wheel
-  let rel = ((pointerAngle - finalAngle) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-  const idx = Math.floor(rel / sliceAngle) % segments.length;
-  const seg = segments[idx];
+function resolveRoulette(finalAngle) {
+  const canvas = document.getElementById('roulCanvas');
+  const segs = canvas?._segs;
+  const slice = canvas?._slice;
+  if (!segs || !slice) { render(); return; }
 
-  S.roulSpinning = false;
+  // pointer at top = angle -PI/2 relative to wheel
+  let rel = ((-Math.PI/2 - finalAngle) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI);
+  const idx = Math.floor(rel/slice) % segs.length;
+  const seg = segs[idx];
 
-  if (seg.type === 'joker') {
-    // Random joker type
-    const jokerType = Math.random() < 0.5 ? 'again' : 'save';
-    S.roulResult = { type: 'joker', jokerType };
+  if (seg.type==='joker') {
+    const type = Math.random()<0.5 ? 'joker-again' : 'joker-save';
+    S.roulReveal = {type};
+  } else if (S.roulSavedIdx === seg.bookIdx) {
+    S.roulReveal = {type:'protected', bookIdx: seg.bookIdx};
     S.roulSavedIdx = null;
   } else {
-    // Check if this book is saved
-    if (S.roulSavedIdx === seg.bookIdx) {
-      // Protected! Treat as joker-again
-      S.roulResult = { type: 'joker', jokerType: 'protected', bookIdx: seg.bookIdx };
-      S.roulSavedIdx = null;
-    } else {
-      S.roulResult = { type: 'eliminate', bookIdx: seg.bookIdx };
-    }
+    S.roulReveal = {type:'elim', bookIdx: seg.bookIdx};
   }
   render();
-  setTimeout(() => drawRoulette(_roulAngle), 50);
+  setTimeout(()=>drawRoulette(_roulAngle),40);
 }
 
-function confirmElimination() {
-  const bookIdx = S.roulResult.bookIdx;
-  S.roulAlive = S.roulAlive.filter(i => i !== bookIdx);
-  S.roulElim.push(bookIdx);
-  S.roulResult = null;
-  S.roulSavedIdx = null;
+function roulConfirmElim() {
+  const bi = S.roulReveal.bookIdx;
+  S.roulAlive = S.roulAlive.filter(i=>i!==bi);
+  S.roulElim.push(bi);
+  S.roulReveal = null;
   S.roulSpinnerIdx++;
-
-  if (S.roulAlive.length === 1) {
+  if (S.roulAlive.length===1) {
     S.winnerBookIdx = S.roulAlive[0];
     S.votingMode = 'roulette';
     go('s2results');
   } else {
     go('s2roulette');
-    setTimeout(() => drawRoulette(_roulAngle), 50);
+    setTimeout(()=>drawRoulette(_roulAngle),60);
   }
 }
 
-function applyJokerAgain() {
-  S.roulResult = null;
-  // Same spinner gets to go again
-  go('s2roulette');
-  setTimeout(() => drawRoulette(_roulAngle), 50);
+function roulJokerAgain() {
+  S.roulReveal = null;
+  render();
+  setTimeout(()=>drawRoulette(_roulAngle),60);
 }
 
-function saveBook(bi) {
+function roulSaveBook(bi) {
   S.roulSavedIdx = bi;
   render();
-  setTimeout(() => drawRoulette(_roulAngle), 50);
+  setTimeout(()=>drawRoulette(_roulAngle),40);
 }
 
-function confirmSave() {
-  S.roulResult = null;
+function roulConfirmSave() {
+  S.roulReveal = null;
   S.roulSpinnerIdx++;
   go('s2roulette');
-  setTimeout(() => drawRoulette(_roulAngle), 50);
+  setTimeout(()=>drawRoulette(_roulAngle),60);
 }
 
-// Re-draw roulette after render when on that step
+// ════════════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════════════
 function render() {
   document.getElementById('root').innerHTML = (views[S.step] || vLanding)();
   if (S.step === 's2roulette') {
@@ -1464,7 +1534,7 @@ function go(step){S.step=step;render();window.scrollTo({top:0,behavior:'smooth'}
 function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 function resetAll(){
-  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],roulAlive:[],roulElim:[],roulSpinnerIdx:0,roulSpinning:false,roulResult:null,roulJokerPending:false,roulJokerType:null,roulSavedIdx:null});
+  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],roulAlive:[],roulElim:[],roulSpinnerIdx:0,roulSpinning:false,roulResult:null,roulReveal:null,roulSavedIdx:null,memVoterIdx:0,memPopup:null,memBoardSize:24,memBoardCols:6});
   render();
 }
 
