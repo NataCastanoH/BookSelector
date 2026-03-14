@@ -989,46 +989,59 @@ function vS2Roulette() {
 
 function renderRouletteReveal(r) {
   if (r.type === 'joker-again') {
-    return `<div class="mem-result-pop"><div class="mem-result-inner">
-      <div class="pop-big">🃏</div>
-      <h3>¡Comodín!</h3>
-      <div class="pop-sub">Giras de nuevo sin eliminar nada</div>
-      <button class="btn btn-g" style="margin-top:.7rem" onclick="roulJokerAgain()">Girar de nuevo ↺</button>
+    return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #4ECDC4">
+      <div class="pop-big">🔁</div>
+      <h3 style="color:#1B6B63">¡Comodín! Repetir turno</h3>
+      <div class="pop-sub">Nadie se elimina — giras de nuevo</div>
+      <button class="btn btn-g" style="margin-top:.9rem" onclick="roulJokerAgain()">Girar de nuevo ↺</button>
     </div></div>`;
   }
   if (r.type === 'joker-save') {
-    return `<div class="mem-result-pop"><div class="mem-result-inner">
+    return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #C9A84C">
       <div class="pop-big">🛡️</div>
-      <h3>¡Comodín!</h3>
-      <div class="pop-sub">Elige un libro para protegerlo de la próxima eliminación</div>
+      <h3 style="color:var(--gold-dark)">¡Comodín! Salvar libro</h3>
+      <div class="pop-sub">Elige un libro para protegerlo del próximo lanzamiento</div>
       <div style="display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0">
         ${S.roulAlive.map(bi => `
           <button class="btn ${S.roulSavedIdx===bi?'btn-g':'btn-o'}" style="font-size:.85rem" onclick="roulSaveBook(${bi})">
-            ${S.roulSavedIdx===bi?'🛡️ ':'📖 '} L${bi+1} · ${S.books[bi].title} <small>(${S.books[bi].participant})</small>
+            ${S.roulSavedIdx===bi?'🛡️':'📖'} L${bi+1} · ${S.books[bi].title} <small>(${S.books[bi].participant})</small>
           </button>`).join('')}
       </div>
       ${S.roulSavedIdx!==null
-        ? `<button class="btn btn-g" onclick="roulConfirmSave()">Confirmar protección ✓</button>`
-        : ''}
+        ? `<button class="btn btn-g" onclick="roulConfirmSave()">Confirmar ✓</button>`
+        : `<div style="font-size:.78rem;color:var(--text-light);font-style:italic">Selecciona un libro para confirmar</div>`}
+    </div></div>`;
+  }
+  if (r.type === 'joker-elim') {
+    return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #E07070">
+      <div class="pop-big">💣</div>
+      <h3 style="color:#c0736b">¡Comodín! Eliminar libro</h3>
+      <div class="pop-sub">Elige qué libro eliminar directamente</div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;margin:.8rem 0">
+        ${S.roulAlive.map(bi => `
+          <button class="btn btn-o" style="font-size:.85rem;border-color:#e07070;color:#c0736b" onclick="roulJokerElim(${bi})">
+            💣 L${bi+1} · ${S.books[bi].title} <small>(${S.books[bi].participant})</small>
+          </button>`).join('')}
+      </div>
     </div></div>`;
   }
   if (r.type === 'protected') {
     const book = S.books[r.bookIdx];
-    return `<div class="mem-result-pop"><div class="mem-result-inner">
+    return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #C9A84C">
       <div class="pop-big">🛡️</div>
-      <h3>¡Libro protegido!</h3>
+      <h3 style="color:var(--gold-dark)">¡Libro protegido!</h3>
       <div class="pop-book">"${book.title}"</div>
       <div class="pop-author">de ${book.author} · ${book.participant}</div>
       <div class="pop-sub" style="margin-top:.5rem">Estaba protegido — se libra esta ronda</div>
-      <button class="btn btn-g" style="margin-top:.8rem" onclick="roulJokerAgain()">Girar de nuevo ↺</button>
+      <button class="btn btn-g" style="margin-top:.8rem" onclick="roulJokerAgain()">Continuar →</button>
     </div></div>`;
   }
-  // elimination — dramatic reveal
+  // Normal elimination
   const book = S.books[r.bookIdx];
   return `<div class="mem-result-pop"><div class="mem-result-inner" style="border-top:4px solid #e07070">
-    <div class="pop-big" style="animation:popUp .4s cubic-bezier(.34,1.56,.64,1)">💀</div>
+    <div class="pop-big">💀</div>
     <h3 style="color:#c0736b">¡Eliminado!</h3>
-    <div class="pop-book" style="font-size:1.2rem;color:var(--teal-dark);margin:.6rem 0 .2rem">"${book.title}"</div>
+    <div class="pop-book" style="font-size:1.15rem;color:var(--teal-dark);margin:.6rem 0 .2rem">"${book.title}"</div>
     <div class="pop-author">de ${book.author}</div>
     <div class="pop-proposer" style="display:inline-block;margin:.4rem 0;background:rgba(224,112,112,.1);border-radius:50px;padding:.2rem .75rem;font-size:.78rem;color:#c0736b">Propuesto por ${book.participant}</div>
     <div style="margin-top:.8rem">
@@ -1382,15 +1395,25 @@ function startRoulette() {
 const ROUL_COLORS = ['#2A9D8F','#C9A84C','#52B788','#4ECDC4','#E8B86D','#74C69D','#1B6B63','#9A7A2E','#6B4F9E','#D4845A'];
 let _roulAngle = 0;
 
+// Joker types in fixed order, cycling
+const JOKER_DEFS = [
+  {id:'again', label:'🔁', color:'#4ECDC4', name:'Repetir turno'},
+  {id:'save',  label:'🛡️', color:'#C9A84C', name:'Salvar libro'},
+  {id:'elim',  label:'💣', color:'#E07070', name:'Eliminar libro'},
+];
 function buildRoulSegments() {
   const alive = S.roulAlive;
   const n = alive.length;
-  const jokerEvery = 3;
   const segs = [];
+  let jokerIdx = 0;
   alive.forEach((bi, i) => {
     segs.push({type:'book', bookIdx:bi, label:'L'+(bi+1)});
-    if ((i+1) % jokerEvery === 0 && segs.filter(s=>s.type==='joker').length < 2)
-      segs.push({type:'joker', label:'🃏'});
+    // Insert one joker after every 3rd book, cycling through the 3 types
+    if (n >= 3 && (i+1) % 3 === 0) {
+      const jd = JOKER_DEFS[jokerIdx % JOKER_DEFS.length];
+      segs.push({type:'joker', jokerId: jd.id, label: jd.label, color: jd.color});
+      jokerIdx++;
+    }
   });
   return segs;
 }
@@ -1416,7 +1439,7 @@ function drawRoulette(angle) {
     ctx.moveTo(cx,cy);
     ctx.arc(cx,cy,r,s,e);
     ctx.closePath();
-    ctx.fillStyle = seg.type==='joker' ? '#E07070' : ROUL_COLORS[S.roulAlive.indexOf(seg.bookIdx) % ROUL_COLORS.length];
+    ctx.fillStyle = seg.type==='joker' ? (seg.color||'#E07070') : ROUL_COLORS[S.roulAlive.indexOf(seg.bookIdx) % ROUL_COLORS.length];
     ctx.fill();
     ctx.strokeStyle='white'; ctx.lineWidth=2.5; ctx.stroke();
 
@@ -1470,9 +1493,7 @@ function resolveRoulette(finalAngle) {
   const seg = segs[idx];
 
   if (seg.type==='joker') {
-    const type = Math.random()<0.5 ? 'joker-again' : 'joker-save';
-    if (type === 'joker-again') S.roulSavedIdx = null; // "gira de nuevo" counts as a used round
-    S.roulReveal = {type};
+    S.roulReveal = {type: 'joker-'+seg.jokerId};
   } else if (S.roulSavedIdx === seg.bookIdx) {
     S.roulReveal = {type:'protected', bookIdx: seg.bookIdx};
     S.roulSavedIdx = null;
@@ -1517,6 +1538,23 @@ function roulConfirmSave() {
   S.roulSpinnerIdx++;
   go('s2roulette');
   setTimeout(()=>drawRoulette(_roulAngle),60);
+}
+
+function roulJokerElim(bi) {
+  // Directly eliminate chosen book
+  S.roulAlive = S.roulAlive.filter(i=>i!==bi);
+  S.roulElim.push(bi);
+  S.roulReveal = null;
+  S.roulSavedIdx = null;
+  S.roulSpinnerIdx++;
+  if (S.roulAlive.length===1) {
+    S.winnerBookIdx = S.roulAlive[0];
+    S.votingMode = 'roulette';
+    go('s2results');
+  } else {
+    go('s2roulette');
+    setTimeout(()=>drawRoulette(_roulAngle),60);
+  }
 }
 
 // ════════════════════════════════════════════════════
