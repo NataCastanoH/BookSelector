@@ -1405,17 +1405,25 @@ function buildRoulSegments() {
   const alive = S.roulAlive;
   const n = alive.length;
   const segs = [];
-  let jokerIdx = 0;
-  alive.forEach((bi, i) => {
-    segs.push({type:'book', bookIdx:bi, label:'L'+(bi+1)});
-    // Insert one joker after every 3rd book, cycling through the 3 types
-    if (n >= 3 && (i+1) % 3 === 0) {
-      const jd = JOKER_DEFS[jokerIdx % JOKER_DEFS.length];
-      segs.push({type:'joker', jokerId: jd.id, label: jd.label, color: jd.color});
-      jokerIdx++;
-    }
+
+  // Always include all 3 jokers, distributed as evenly as possible among books
+  // Strategy: interleave books and jokers so wheel always has all 3 comodines
+  const totalJokers = JOKER_DEFS.length; // always 3
+  const total = n + totalJokers;
+
+  // Place books first, then insert jokers at evenly spaced positions
+  const bookSlots = alive.map((bi,i) => ({type:'book', bookIdx:bi, label:'L'+(bi+1)}));
+  const jokerSlots = JOKER_DEFS.map(jd => ({type:'joker', jokerId:jd.id, label:jd.label, color:jd.color}));
+
+  // Interleave: spread jokers evenly across the book slots
+  const combined = [...bookSlots];
+  jokerSlots.forEach((jk, ji) => {
+    // Insert after position: floor((ji+1) * n / (totalJokers+1))
+    const pos = Math.floor((ji+1) * (n+ji) / (totalJokers+1)) + ji;
+    combined.splice(Math.min(pos, combined.length), 0, jk);
   });
-  return segs;
+
+  return combined;
 }
 
 function drawRoulette(angle) {
