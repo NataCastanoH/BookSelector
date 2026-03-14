@@ -1462,6 +1462,7 @@ function drawRoulette(angle) {
   ctx.fillText('✦',cx,cy);
 
   canvas._segs = segs; canvas._slice = slice;
+  S._roulSegs = segs; S._roulSlice = slice;
 }
 
 function spinRoulette() {
@@ -1482,9 +1483,8 @@ function spinRoulette() {
 }
 
 function resolveRoulette(finalAngle) {
-  const canvas = document.getElementById('roulCanvas');
-  const segs = canvas?._segs;
-  const slice = canvas?._slice;
+  const segs = S._roulSegs;
+  const slice = S._roulSlice;
   if (!segs || !slice) { render(); return; }
 
   // pointer at top = angle -PI/2 relative to wheel
@@ -1574,7 +1574,7 @@ function go(step){S.step=step;render();window.scrollTo({top:0,behavior:'smooth'}
 function esc(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 function resetAll(){
-  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],roulAlive:[],roulElim:[],roulSpinnerIdx:0,roulSpinning:false,roulResult:null,roulReveal:null,roulSavedIdx:null,memVoterIdx:0,memPopup:null,memBoardSize:24,memBoardCols:6});
+  Object.assign(S,{step:'landing',participants:[],genres:[],votes:{},voterIdx:0,winnerGenre:null,tiedGenres:null,_reviewBack:null,books:[],votingMode:null,bookVotes:{},bookVoterIdx:0,tiedBooks:null,winnerBookIdx:null,memCards:[],memFlipped:[],memLocked:false,memMoves:0,memSurvivors:[],roulAlive:[],roulElim:[],roulSpinnerIdx:0,roulSpinning:false,roulResult:null,roulReveal:null,roulSavedIdx:null,_roulSegs:null,_roulSlice:null,memVoterIdx:0,memPopup:null,memBoardSize:24,memBoardCols:6});
   render();
 }
 
