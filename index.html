@@ -1491,14 +1491,24 @@ function spinRoulette() {
 }
 
 function resolveRoulette(finalAngle) {
-  const segs = S._roulSegs;
-  const slice = S._roulSlice;
+  // Always rebuild segments fresh at resolution time — guarantees correct mapping
+  const segs = buildRoulSegments();
+  const n = segs.length;
+  const slice = (2 * Math.PI) / n;
+  S._roulSegs = segs; S._roulSlice = slice;
   if (!segs || !slice) { render(); return; }
 
-  // pointer at top = angle -PI/2 relative to wheel
-  let rel = ((-Math.PI/2 - finalAngle) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI);
-  const idx = Math.floor(rel/slice) % segs.length;
+  // Normalize angle to 0..2PI to avoid float accumulation issues
+  const norm = ((finalAngle % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+  _roulAngle = norm;
+
+  // pointer at top = -PI/2. Find which segment is under the pointer.
+  let rel = ((-Math.PI/2 - norm) % (2*Math.PI) + 2*Math.PI) % (2*Math.PI);
+  const idx = Math.floor(rel / slice) % segs.length;
   const seg = segs[idx];
+
+  // Debug log (remove after testing)
+  console.log('Roulette landed on idx:', idx, '/', segs.length, '→', seg.type, seg.jokerId || seg.label);
 
   if (seg.type==='joker') {
     S.roulReveal = {type: 'joker-'+seg.jokerId};
