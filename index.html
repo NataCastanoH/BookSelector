@@ -1471,12 +1471,14 @@ function resolveRoulette(finalAngle) {
 
   if (seg.type==='joker') {
     const type = Math.random()<0.5 ? 'joker-again' : 'joker-save';
+    if (type === 'joker-again') S.roulSavedIdx = null; // "gira de nuevo" counts as a used round
     S.roulReveal = {type};
   } else if (S.roulSavedIdx === seg.bookIdx) {
     S.roulReveal = {type:'protected', bookIdx: seg.bookIdx};
     S.roulSavedIdx = null;
   } else {
     S.roulReveal = {type:'elim', bookIdx: seg.bookIdx};
+    S.roulSavedIdx = null;  // protection expires after one full spin round
   }
   render();
   setTimeout(()=>drawRoulette(_roulAngle),40);
